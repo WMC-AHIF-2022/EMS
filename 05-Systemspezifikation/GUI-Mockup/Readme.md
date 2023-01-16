@@ -62,7 +62,7 @@ Detailbeschreibungen für den Use Case aus dem Use Case Diagramm.
 
 - GUI-Mockup der Start Seite.
 
-<img src="./GUI-MockupMainPage.PNG">
+<img src="./pics/GUI-MockupMainPage.PNG">
 
 
 #### 2.2.2 Workflow
