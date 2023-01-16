@@ -51,7 +51,7 @@ Dieser Abschnitt hat die Aufgabe, die Funktionalität des zu entwickelnden Syste
 
 ### 2.2. Use Case A
 
-Detailbeschreibungen für den Use Case aus dem Use Case Diagramm.
+<img src="./pics/UsecaseA.png">
 
 #### 2.2.1 GUI-Design
 
@@ -75,7 +75,7 @@ Detailbeschreibungen für den Use Case aus dem Use Case Diagramm.
 
 ### 2.3. Use Case B
 
-Detailbeschreibungen für den Use Case aus dem Use Case Diagramm.
+<img src="./pics/GUI-Mockup-SettingsPage.png">
 
 ## 3. Nicht-funktionale Anforderungen
 
