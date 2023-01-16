@@ -39,30 +39,30 @@ z.B.: produzieren die wenigsten Wechselrichter Hersteller auch E-Auto Ladestatio
 
 ## 2. Funktionale Anforderungen
 
-Dieser Abschnitt hat die Aufgabe, die Funktionalität des zu entwickelnden Systems aus End-User-Sicht sowohl überblicksartig als auch detaillierter zu beschreiben.
-
 ### 2.1. Use Case Überblick
 
-- Ein oder mehrere `UML Use Case Diagramme` (=> siehe https://hoelzel.at/flip/160775/280/index.html S. 280 - 282) visualisieren das gesamte geplante Featureset im Groben
-- Basis dafür ist die Mindmap aus dem Projektantrag => Ergänzen Sie relevante Rollen (für welche User-Gruppe ist ein Feature wichtig?)
-- Mit kurzen verbalen Beschreibungen der Diagramme
-
 <img src="./pics/Usecase-Diagram-EMS.png">
+
+### 2.2.1 GUI-Design
+
+- GUI-Mockup der Statistiken Page (Erster Entwurf)
+
+<img src="./pics/GUI-Mockup.PNG">
+
+
+- GUI-Mockup der Start Seite
+
+<img src="./pics/GUI-MockupMainPage.PNG">
 
 ### 2.2. Use Case A
 
 <img src="./pics/UsecaseA.png">
 
-#### 2.2.1 GUI-Design
+Das ist eine Statistik die wir in 4 Statistiken aufteilen werden, das ist nur als Beispiel gedacht umd zu veranschaulichen wie es werden wird, da es bis jetzt noch keine derartigen Auswertungen gibt. Bei den vier Statistiken kann man durch den Use-Case B (Settings) die Eigenschaften der Tabellen ändern um die Energiegewinnung besser darzustellen.
+### 2.3. Use Case B
 
-- GUI-Mockup der Statistiken Page
-
-<img src="./pics/GUI-Mockup.PNG">
-
-
-- GUI-Mockup der Start Seite.
-
-<img src="./pics/GUI-MockupMainPage.PNG">
+<img src="./pics/GUI-Mockup-SettingsPage.png">
+Bei den Settings wird noch ein Bild eingefügt(config). Bei den Settings geht es um die Eigenschaften der Tabelle. Wie die Einheit des Stroms den man produziert oder die Währung. Wie viel man für den Stro bekommt wenn man in weiterverkauft. Weiters kann man den Zeitabschnitt angeben(pro Tag,Monat oder Jahr).
 
 
 #### 2.2.2 Workflow
@@ -73,9 +73,7 @@ Dieser Abschnitt hat die Aufgabe, die Funktionalität des zu entwickelnden Syste
 
 <img src="./pics/ACD.jpg">
 
-### 2.3. Use Case B
 
-<img src="./pics/GUI-Mockup-SettingsPage.png">
 
 ## 3. Nicht-funktionale Anforderungen
 
