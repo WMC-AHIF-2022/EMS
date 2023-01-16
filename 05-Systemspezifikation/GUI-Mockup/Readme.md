@@ -1,23 +1,20 @@
-# System-Spezifikation `Projekt-Titel`
+# System-Spezifikation `EMS - Energie Management System`
 
 ## 1. Ausgangslage und Zielsetzung
 
 ### 1.1. Ist-Situation
-
-Die vorhandenen Komonenten sind:
+Die vorhandenen Komponenten sind:
 - Huawei Wechselrichter und Speicher
 - KEBA Ladestation
 
-**Es besteht eben noch kein User Interface für eine derartige Steuerung, genau dass ist das Ziel des Projekts.**
+**Es besteht noch kein User Interface für eine derartige Steuerung, dass ist das Ziel des Projekts.**
 
-
-Ein Energie Management System als Übersicht über die Daten der PV Anlage. 
+Ein Energie Management System als Übersicht über die Daten der PV-Anlage. 
 Ziel ist es, Daten zusammenzuführen von den verschiedenen Energie Verbrauchern und Energie Generatoren in einem Haushalt. 
 
-
-Bestehende Systeme sind nur darauf abgestimmt, dass alle Komponetnen vom gleichen Hersteller stammen müssen.
-Da jedoch sehr viele Komponenten im Einsatz sind, ist es oft sehr schwierig alles nur voneinem Hresteller zu verwenden
-z.B: produzieren die wenigsten Wechselrichter Hersteller auch E-Auto Ladestationen und Speicher.
+Bestehende Systeme sind nur darauf abgestimmt, dass alle Komponenten vom gleichen Hersteller stammen müssen.
+Da jedoch sehr viele Komponenten im Einsatz sind, ist es oft sehr schwierig alles nur von einem Hersteller zu verwenden
+z.B.: produzieren die wenigsten Wechselrichter Hersteller auch E-Auto Ladestationen und Speicher.
 
 ### 1.2. Verbesserungspotenziale
 
@@ -26,26 +23,23 @@ z.B: produzieren die wenigsten Wechselrichter Hersteller auch E-Auto Ladestation
 - Kosten werden nicht gut aufgezeigt
 - keine statistischen Informationen
 
-
 #### Verbesserungen
 - Gute Übersicht über den aktuellen Verbrauch / Stromzufuhr
 - Verwaltung der Energie
 - Ladestand Speicher
-- Kompatibilität verschiendener Herrsteller ermöglichen
-
+- Kompatibilität verschiedener Hersteller ermöglichen
 
 ## 2. Zielsetzung
 
-
-- Das Ziel ist die Steuerung des Baterie Speichers und der Ladestation.
+- Das Ziel ist die Steuerung des Batterie Speichers und der Ladestation.
 - Das System soll die Priorisierung ermöglichen.
 - Unser Ziel ist die Veranschaulichung des Stromverbrauches und des Stromgewinns zu verbessern.
 - Selbsterzeugten Strom bestmöglich zu verwenden und erst dann die überschüssige Energie ins Netz einzuspeisen.
 
+
 ## 2. Funktionale Anforderungen
 
-
-
+Dieser Abschnitt hat die Aufgabe, die Funktionalität des zu entwickelnden Systems aus End-User-Sicht sowohl überblicksartig als auch detaillierter zu beschreiben.
 
 ### 2.1. Use Case Überblick
 
@@ -53,28 +47,22 @@ z.B: produzieren die wenigsten Wechselrichter Hersteller auch E-Auto Ladestation
 - Basis dafür ist die Mindmap aus dem Projektantrag => Ergänzen Sie relevante Rollen (für welche User-Gruppe ist ein Feature wichtig?)
 - Mit kurzen verbalen Beschreibungen der Diagramme
 
-<img src="./UCD.png">
-
-Wenn Sie mehrere benötigen - verwenden Sie Unterkapitel der Ebene 3 dafür:
-
-#### 2.1.1. Use Case Diagramm A
-
-
-
-#### 2.1.2. Use Case Diagramm B
-
-etc..
+<img src="./pics/Usecase-Diagram-EMS.png">
 
 ### 2.2. Use Case A
 
-Nun folgen Detailbeschreibungen für alle Use Cases aus dem Use Case Diagramm. Für jeden Use Case sind folgende Details notwendig:
+Detailbeschreibungen für den Use Case aus dem Use Case Diagramm.
 
 #### 2.2.1 GUI-Design
 
-- Zeigen Sie hier den GUI-Mockup, den Sie für diesen Use Case designed haben (mit Figma oder einem anderen GUI-Mockup-Tool Ihrer Wahl)
-- Ergänzen Sie das Bild mit verbalen Beschreyyyyyyyyyyyyyyyyyyyyyyyyyyyibungen, wenn nötig.
+- GUI-Mockup der Statistiken Page
 
-<img src="./GUI-Mockup.PNG">
+<img src="./pics/GUI-Mockup.PNG">
+
+
+- GUI-Mockup der Start Seite.
+
+<img src="./GUI-MockupMainPage.PNG">
 
 
 #### 2.2.2 Workflow
@@ -83,11 +71,11 @@ Nun folgen Detailbeschreibungen für alle Use Cases aus dem Use Case Diagramm. F
 - Verwenden Sie dazu - wenn der Ablauf komplex genug ist - ein `UML Activity Diagram`
 - Beispiel:
 
-<img src="./ACD.jpg">
+<img src="./pics/ACD.jpg">
 
 ### 2.3. Use Case B
 
-... nächster Use Case, usw.
+Detailbeschreibungen für den Use Case aus dem Use Case Diagramm.
 
 ## 3. Nicht-funktionale Anforderungen
 
