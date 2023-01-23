@@ -49,7 +49,9 @@ Dieser Abschnitt hat die Aufgabe, die Funktionalität des zu entwickelnden Syste
 
 <img src="./pics/Usecase-Diagram-EMS.png">
 
-### 2.2. Use Case A
+### 2.2. Use Case Statistik
+
+- Mit den Daten von dem Wechselrichter.
 
 <img src="./pics/UsecaseA.png">
 
