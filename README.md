@@ -53,6 +53,7 @@ z.B.: produzieren die wenigsten Wechselrichter Hersteller auch E-Auto Ladestatio
 - GUI-Mockup der Start Seite
 
 <img src="./pics/GUI-MockupMainPage.PNG">
+<img src="./pics/GUI-MockupStatistikPage.png">
 
 ### 2.2. Use Case A
 
