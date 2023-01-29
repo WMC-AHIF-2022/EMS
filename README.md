@@ -45,25 +45,20 @@ z.B.: produzieren die wenigsten Wechselrichter Hersteller auch E-Auto Ladestatio
 
 ### 2.2.1 GUI-Design
 
-- GUI-Mockup der Statistiken Page (Erster Entwurf)
-
-<img src="./pics/GUI-Mockup.PNG">
-
-
 - GUI-Mockup der Start Seite
 
 <img src="./pics/GUI-MockupMainPage.PNG">
+
+
+### 2.2. Use Case Statistik
+
 <img src="./pics/GUI-MockupStatistikPage.png">
 
-### 2.2. Use Case A
-
-<img src="./pics/UsecaseA.png">
-
-Das ist eine Statistik die wir in 4 Statistiken aufteilen werden, das ist nur als Beispiel gedacht umd zu veranschaulichen wie es werden wird, da es bis jetzt noch keine derartigen Auswertungen gibt. Bei den vier Statistiken kann man durch den Use-Case B (Settings) die Eigenschaften der Tabellen ändern um die Energiegewinnung besser darzustellen.
-### 2.3. Use Case B
+Es wird von einer Datenbank eine Statistik generiert, die durch Auswahlmöglichkeiten veränderbar ist. Dies geschieht durch abhackerln der jeweiligen Alternativen auf der rechten Seite. Weiters kann das Jahr und das jeweilige Monat auf der Statistik angezeigt werden. Dies geschieht durch den Button vorheriges Monat und nächstes Monat.  
+### 2.3. Use Case Settings
 
 <img src="./pics/GUI-Mockup-SettingsPage.png">
-Bei den Settings wird noch ein Bild eingefügt(config). Bei den Settings geht es um die Eigenschaften der Tabelle. Wie die Einheit des Stroms den man produziert oder die Währung. Wie viel man für den Stro bekommt wenn man in weiterverkauft. Weiters kann man den Zeitabschnitt angeben(pro Tag,Monat oder Jahr).
+ Bei den Settings geht es um die Eigenschaften der Tabelle. Wie die Einheit des Stroms den man produziert oder die Währung. Wie viel man für den Strom bekommt wenn man in weiterverkauft. Weiters kann man den Zeitabschnitt angeben(pro Monat oder Jahr).
 
 
 #### 2.2.2 Workflow
@@ -74,62 +69,34 @@ Bei den Settings wird noch ein Bild eingefügt(config). Bei den Settings geht es
 
 <img src="./pics/ACD.jpg">
 
-
-
 ## 3. Nicht-funktionale Anforderungen
 
-Nicht-funktionale Anforderungen beschreiben Anforderungen an das System, die nicht-fachlicher Natur sind, jedoch entscheidend zur Anwendbarkeit des Systems beitragen. Sie definieren beispielsweise Qualitätsanforderungen, Sicherheitsanforderungen oder Performanceanforderungen.
-
-Nicht-funktionale Anforderungen definieren grundlegende Eigenschaften eines Systems, die im Architekturentwurf berücksichtigt werden müssen. Da diese Anforderungen auch die Entwicklungskosten beeinflussen (können), müssen sie messbar beschrieben werden.
-
-- FALSCH: Das System muss schnell sein.
-- RICHTIG: Daten müssen spätestens innerhalb von 500 ms zurückgegeben werden.
-
-Zur einfachen Strukturierung der Anforderungen werden diejenigen Anforderungen, die nicht eindeutig zu den funktionalen Anforderungen gehören, den nicht-funktionalen Anforderungen zugeordnet.
-
-Hier ein Überblick über mögliche nicht-funktionale Anforderungen:
-
 ### `Usability`: Benutzbarkeitsanforderung
+- Die Statistiken der Website sollten übersichtlich und     informationsreich dargestellt sein
 
-- Wie muss die Software beschaffen sein, damit die Zielgruppe gerne damit arbeitet?
-- Beispiel:
-  - Die Software soll dem Erscheinungsbild anderer Produkte des Herstellers entsprechen.
+- Benutzerfreundiche strukture der Website
 
 ### `Efficiency`: Effizienzanforderung
 
-- Hier geht es sowohl um Laufzeit- als auch um Speichereffizienz. Was wird unter dem sparsamen Einsatz dieser Ressourcen verstanden?
-- Beispiel:
-  - Die Berechnung darf nicht länger als 0,25 Sekunden dauern.
+- Das Auswerten der Daten darf nicht länger als 10 Sekunden benötigen um den Benutzer nicht abzuschrecken -> Datenbank erstellen
 
 ### `Maintenance`: Wartbarkeits- und Portierbarkeitsanforderung
 
-- Welcher Grad an Änderbarkeit wird gefordert? Hier werden, soweit wie möglich, kommende Anpassungen und Erweiterungen vorhergesehen.
-- Beispiel:
-  - Das Produkt soll später auch in englischer Sprache verfügbar sein.
-
+- Es müssen neue Daten vom Wechselrichter zur Datenbank hinzugefügt werden können ohne viel Aufwand zu betreiben
 ### `Security`: Sicherheitsanforderung
 
-- Zu den Sicherheitsanforderungen gehören die Aspekte Vertraulichkeit, Datenintegrität und Verfügbarkeit.
-  - Wie sehr müssen die Daten vor dem Zugriff durch Dritte geschützt werden?
-  - Ist es entscheidend, die Korrektheit der erfassten Daten und ihre Konsistenz zu gewährleisten?
-  - Dürfen Systemausfälle vorkommen?
-- Beispiel:
-  - Das System muss gewährleisten, dass Daten nie verändert werden können.
+- Das System muss gewhärleisten das der Benutzer auf seine Daten zugreifen kann und sonst kein anderer
+
+- Virenfreie Daten hochladen
+
+- Sichere Verbindung zum Server
 
 ### `Legal`: Gesetzliche Anforderung
 
-- Welche Standards und Gesetze müssen beachtet werden?
-- Beispiel:
-  - Das Produkt muss die ISO 9000 Norm erfüllen.
+- Persöhnliche Daten dürfen nicht weitergegeben werden
 
 ## 4. Mengengerüst
-
-Zur Abschätzung der aufkommenden Datenmengen und damit verbunden der notwendigen Infrastruktur, um die nötige Performance zu erzielen, ist ein Mengengerüst zu erstellen. Mögliche Fragestellungen:
-
-- Wieviele User werden erwartet?
-- Wieviele Daten pro User werden erwartet?
-- Mit welcher Anfrage-Frequenz wird gerechnet?
-
+- Es wird ein Benutzer erwartet, der seine Daten jedes halbe Jahr von seinem Wechselrichter auf die Datenbank speichert. Das heißt die Dauer der Datenauswertung benötigt für kurze Zeit eine hohe Außlastung des Webservers. 
 ## 5. Systemarchitektur
 
 - Auflistung der Softwarekomponenten in einem Verteilungsdiagramm (typisch: Client - Server - Datenbank).
