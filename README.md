@@ -41,7 +41,7 @@ z.B.: produzieren die wenigsten Wechselrichter Hersteller auch E-Auto Ladestatio
 
 ### 2.1. Use Case Überblick
 
-<img src="./pics/Usecase-Diagram-EMS.png">
+<img src="./pics/UCD.png">
 
 ### 2.2.1 GUI-Design
 
