@@ -42,31 +42,31 @@ z.B.: produzieren die wenigsten Wechselrichter Hersteller auch E-Auto Ladestatio
 
 ### 2.2. Use Case Statistik
 
-<img src="./pics/GUI-MockupStatistikPage.png">
+<img src="./pics/Statistik.jpeg">
 
-Es wird von der Datenbank eine Statistik generiert, die durch Auswahlmöglichkeiten veränderbar ist. Dies geschieht durch abhackerln der jeweiligen Alternativen auf der rechten Seite. Weiters kann das Jahr und das jeweilige Monat auf der Statistik angezeigt werden. Dies geschieht durch den Button vorheriges Monat und nächstes Monat.  
+Es wird von der Datenbank eine Statistik generiert, die durch Auswahlmöglichkeiten veränderbar ist. Dies geschieht durch abhackerln der jeweiligen Alternativen auf der rechten Seite. Weiters kann das Jahr,der Monat oder der jeweilige Tag die Statistik verändern. Dies geschieht durch klicken auf den jewiligen Punkt und darunter kann man den Monat auswählen, der durch Pfeiltasten zum nächsten oder vorherigen Monat springt.  
 ### 2.3. Use Case Settings
 
 <img src="./pics/GUI-Mockup-SettingsPage.png">
  Bei den Settings geht es um die Eigenschaften der Tabelle. Wie die Einheit des Stroms den man produziert oder eine Darstellung der Kosten. Hierzu kann man die Währung ändern, um zu wissen wie viel man für den Strom den man gewonnen hat bekommt. Weiters kann man den Default-Zeitabschnitt angeben (pro Monat oder Jahr) wenn man auf die Website kommt.
 
-### 2.2.2 Workflow
+### 2.4 Workflow
 Durch das Hackerln der verschiedenen Eigenschaften der Tabelle (Stromverbrauch, Strommgewinnung, Netto-Strombilanz, Gesamtpreis) wird das gegebene Diagramm geändert. Weiters auch durch das Anklicken von Monat und Jahr. Durch das Zahnrad oben rechts neben dem Logo können die Default-Settings eingestellt werden. Durch drauf Klicken auf das jeweilige Einheit wird sich ein Dropdown button öffnen, wo der User die jeweilige Einheit auswählen kann.
 
 ## 3. Nicht-funktionale Anforderungen
 
 ### `Usability`: Benutzbarkeitsanforderung
-- Die Statistiken der Website sollten übersichtlich und     informationsreich dargestellt sein
-
-- Benutzerfreundiche strukture der Website
+- Die Statistiken der Website sollten übersichtlich und     informationsreich dargestellt sein (Benutzerfreundlich)
 
 ### `Efficiency`: Effizienzanforderung
 
-- Das Auswerten der Daten darf nicht länger als 10 Sekunden benötigen um den Benutzer nicht abzuschrecken -> Datenbank erstellen
+- Das Auswerten der Daten darf nicht länger als 5 Sekunden benötigen um den Benutzer nicht abzuschrecken -> Datenbank erstellen
 
 ### `Maintenance`: Wartbarkeits- und Portierbarkeitsanforderung
 
 - Es müssen neue Daten vom Wechselrichter zur Datenbank hinzugefügt werden können ohne viel Aufwand zu betreiben
+
+- Eine Steuerung, wo der Strom hingeleitet werden soll
 ### `Security`: Sicherheitsanforderung
 
 - Das System muss gewhärleisten das der Benutzer auf seine Daten zugreifen kann und sonst kein anderer
@@ -77,13 +77,14 @@ Durch das Hackerln der verschiedenen Eigenschaften der Tabelle (Stromverbrauch, 
 
 ### `Legal`: Gesetzliche Anforderung
 
-- Persöhnliche Daten dürfen nicht weitergegeben werden
+- Die Datenschutzerklärung muss eingehalten werden
 
 ## 4. Mengengerüst
-- Es wird ein Benutzer erwartet, der seine Daten jedes halbe Jahr von seinem Wechselrichter auf die Datenbank speichert. Das heißt die Dauer der Datenauswertung benötigt für kurze Zeit eine hohe Außlastung des Webservers. 
+- Es wird vom Raspberry Pi stündlich ein Datensatz von dem Wechselrichter auf die Datenbank gespeichert. Es ist nur jeder Stunde um die Wartezeit zu verkürzen. Hierbei wird nur ein Benutzer auf der Website erwartet.
 ## 5. Systemarchitektur
 
-- Auflistung der Softwarekomponenten in einem Verteilungsdiagramm (typisch: Client - Server - Datenbank).
-- Beispiel:
+<img src="./pics/SystemArchitektur.png">
 
-<img src="./Architektur.jpg">
+## 6. Datenmodell
+
+<img src="./pics/Datenmodell.png">
