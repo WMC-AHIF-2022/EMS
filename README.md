@@ -87,4 +87,4 @@ Durch das Hackerln der verschiedenen Eigenschaften der Tabelle (Stromverbrauch, 
 
 ## 6. Datenmodell
 
-<img src="./pics/Datenmodell.png">
+<img src="./pics/Datenmodell.PNG">
