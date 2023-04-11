@@ -83,7 +83,7 @@ Durch das Hackerln der verschiedenen Eigenschaften der Tabelle (Stromverbrauch, 
 - Es wird vom Raspberry Pi stündlich ein Datensatz von dem Wechselrichter auf die Datenbank gespeichert. Es ist nur jeder Stunde um die Wartezeit zu verkürzen. Hierbei wird nur ein Benutzer auf der Website erwartet.
 ## 5. Systemarchitektur
 
-<img src="./pics/SystemArchitektur.png">
+<img src="./pics/SystemArchitektur.PNG">
 
 ## 6. Datenmodell
 
