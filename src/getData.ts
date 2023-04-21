@@ -3,11 +3,11 @@ async function getDataFromAPI(): Promise<void> {
         const response = await fetch('https://ems-syp.000webhostapp.com/api/');
         //console.log(response);
         const data = await response.json();
-        //console.log(data);
+        console.log(data);
         let dataArray = Array.isArray(data) ? data : [data];
-        console.log(dataArray);
+        //console.log(dataArray);
         for (let i = 0; i < dataArray.length; i++) {
-            const convertedDate = new Date(convertDateTime(dataArray[i].time));
+            const convertedDate = new Date(convertDateTime(dataArray[i].timestamp));
             if (!isNaN(convertedDate.getTime())) {
                 dataArray[i].time = convertedDate;
             } else {
@@ -19,7 +19,7 @@ async function getDataFromAPI(): Promise<void> {
         let genArray = [];
         let conArray = [];
         for(let i = 0; i < dataArray.length; i++){
-            console.log(dataArray[i]);
+            //console.log(dataArray[i]);
             if(dataArray[i].type === 'generation'){
                 genArray.push(dataArray[i]);
             }else if(dataArray[i].type === 'consumption'){
@@ -56,6 +56,7 @@ function processJSON(jsonArray: any[]): any[] {
 }
 
 function convertDateTime(inputDateTime) {
+    //console.log(inputDateTime);
     const dateParts = inputDateTime.split(" ")[0].split("-");
     const timeParts = inputDateTime.split(" ")[1].split(":");
     const day = dateParts[2];

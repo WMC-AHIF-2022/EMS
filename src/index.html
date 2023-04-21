@@ -11,9 +11,18 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body onload='init()'>
-    <div id="container">
-      <div id="weatherForecast"></div>
-      <canvas id="StatsChart"></canvas>
+    <div id="navbar" style="background-color: darkgrey;">
+      <nav style="display: flex; justify-content: space-between; align-items: center; padding: 1rem;">
+        <h2 style="margin: 0;"><b>EMS - Energie Management System</b></h2>
+        <div style="display: flex;">
+          <h2 style="margin: 0 1rem 0 0;">Home</h2>
+          <h2 style="margin: 0;">Settings</h2>
+        </div>
+      </nav>
+    </div><br>
+    <div id="container" style="display: flex; justify-content: flex-start; align-items: center;">
+      <div id="weatherForecast" style="flex-basis: auto; margin-right: 1rem; margin-top: -10%;"></div>
+      <canvas id="StatsChart" style="flex-basis: 100%;"></canvas>
     </div>
   </body>
 </html>
