@@ -5,7 +5,11 @@
     <title>EMS - Energy Management System</title>
     <link rel="stylesheet" type="text/css" href="./styles/main.css">
     <script src="app.js"></script>
+    <script src="weather.js"></script>
   </head>
-  <body>
+  <body onload='getWeatherForecast("Linz")'>
+    <div id="container">
+      <div id="weatherForecast"></div>
+    </div>
   </body>
 </html>
