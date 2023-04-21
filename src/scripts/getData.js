@@ -3,7 +3,7 @@ async function getDataFromAPI() {
         const response = await fetch('https://ems-syp.000webhostapp.com/api/');
         const data = await response.json();
         let dataArray = Array.isArray(data) ? data : [data];
-        console.log(dataArray);
+        //console.log(dataArray);
         for (let i = 0; i < dataArray.length; i++) {
             if (dataArray[i].time) {
                 const convertedDate = new Date(convertDateTime(dataArray[i].time));
@@ -18,15 +18,15 @@ async function getDataFromAPI() {
         let genArray = [];
         let conArray = [];
         for(let i = 0; i < dataArray.length; i++){
-            console.log(dataArray[i]);
+            //console.log(dataArray[i]);
             if(dataArray[i].type === 'generation'){
                 genArray.push(dataArray[i].measurement);
             }else if(dataArray[i].type === 'consumption'){
                 conArray.push(dataArray[i].measurement);
             }
         }
-        console.log("Generated: ", genArray);
-        console.log("Consumed: ", conArray);
+        //console.log("Generated: ", genArray);
+        //console.log("Consumed: ", conArray);
     } catch (error) {
         console.error('Fehler beim Abrufen der Daten:', error);
     }

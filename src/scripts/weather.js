@@ -8,7 +8,7 @@ async function getWeatherForecast(city) {
       if (data.length > 0) {
         const latitude = data[0].lat;
         const longitude = data[0].lon;
-        console.log('Latitude:', latitude, 'Longitude:', longitude);
+        //console.log('Latitude:', latitude, 'Longitude:', longitude);
         getWeatherForecastFromAPI(latitude, longitude);
       } else {
         console.log('Keine Ergebnisse gefunden.');
@@ -50,13 +50,14 @@ async function getWeatherForecast(city) {
   
   async function getWeatherForecastFromAPI(latitude, longitude) {
     const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=01752eb5ff2b67aac8cfaf76717a7954&lang=de&units=metric`;
-    console.log(url);
+    //console.log(url);
   
     try {
       const response = await fetch(url);
       const data = await response.json();
-      console.log(data);
+      //console.log(data);
       let string = "";
+      document.getElementById('weatherForecast').innerHTML = "<h3>Wettervorhersage</h3>";
       for(let i = 0; i < data.list.length; i++){
           string = "";
           let forecast = data.list[i];
