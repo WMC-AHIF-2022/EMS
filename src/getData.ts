@@ -1,4 +1,4 @@
-async function getDataFromAPI(): Promise<void> {
+async function getDataFromAPI(): Promise<any> {
     try {
         const response = await fetch('https://ems-syp.000webhostapp.com/api/');
         //console.log(response);
@@ -15,17 +15,7 @@ async function getDataFromAPI(): Promise<void> {
             }
         }
         dataArray = processJSON(dataArray);
-        //DEV AUSGABE
-        let genArray = [];
-        let conArray = [];
-        for(let i = 0; i < dataArray.length; i++){
-            //console.log(dataArray[i]);
-            if(dataArray[i].type === 'generation'){
-                genArray.push(dataArray[i]);
-            }else if(dataArray[i].type === 'consumption'){
-                conArray.push(dataArray[i]);
-            }
-        }
+        return dataArray;
     } catch (error) {
         console.error('Fehler beim Abrufen der Daten:', error);
     }
@@ -69,8 +59,31 @@ function convertDateTime(inputDateTime) {
     return convertedDateTime;
 }
 
+function calculateNetUsage(data) {
+    let generated = 0;
+    let consumed = 0;
+
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].type === "generation") {
+            generated += parseInt(data[i].measurement);
+        } else if (data[i].type === "consumption") {
+            consumed += parseInt(data[i].measurement);
+        }
+    }
+
+    const net = generated - consumed;
+
+    return {
+        generated,
+        consumed,
+        net
+    };
+}
+
 async function main() {
-    await getDataFromAPI(); // Aufruf der Funktion
+    const data = await getDataFromAPI(); // Aufruf der Funktion
+	const dataCalc = calculateNetUsage(data);
+	console.log(dataCalc);
 }
 
 main();
