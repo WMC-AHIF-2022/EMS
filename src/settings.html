@@ -4,8 +4,19 @@
     <meta charset="UTF-8">
     <title>EMS - Energy Management System</title>
     <link rel="stylesheet" type="text/css" href="./styles/main.css">
-    <script src="app.js"></script>
+	<script src="./scripts/settings.js"></script>
   </head>
   <body>
+  <div id="settings">
+	<script>
+		(async () => {
+			let settings = await getSettings();
+			let string = "";
+			for(let i = 0; i < settings.length; i++){
+				string += settings[i].setting+": "+settings[i].value+"<br>";
+			}
+			document.getElementById("settings").innerHTML = string;
+		})();
+	</script>
   </body>
 </html>
