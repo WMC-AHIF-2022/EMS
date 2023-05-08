@@ -12,6 +12,7 @@ body {
   display: flex;
   justify-content: right;
   align-items: right;
+  cursor: default
 }
 
 .box {
@@ -21,4 +22,5 @@ body {
 	border: 1px solid #ddd;
 	box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
 	text-align: left;
+	cursor: default
 }

@@ -17,8 +17,7 @@
       <nav style="display: flex; justify-content: space-between; align-items: center; padding: 1rem;">
         <h2 style="margin: 0;" class="clickable" onclick="location.href = './index.html';"><b>EMS - Energie Management System</b></h2>
         <div style="display: flex;">
-          <h2 style="margin: 0;"><div class="container">
-			<h2 class="activeNav clickable" onclick="location.href = './index.html';">Settings  </h2>
+          <h2 style="margin: 0;" class="clickable" id="settingsButton" onclick="getHome(event)">Settings  <div class="container">
 			<div class="box">
 				<div id="infoBox" style="padding: 3%;"></div>
 				<h2><b>Einstellungen:</b></h2>
@@ -28,7 +27,7 @@
 				<p>Wohnort: <input type="text" name="homeCity" id="homeCity" placeholder="z.b. Linz"></p>
 				<button onclick="sendSettings()" class="clickable">Speichern</button>
 			</div>
-	</div></h2>
+			</div></h2>
         </div>
       </nav>
     </div>
@@ -45,14 +44,10 @@
 			}
 		})();
 		
-		function toggleVisibility(element) {
-		  console.log(element);
-		  const display = getComputedStyle(element).display;
-		  if (display !== 'none') {
-			element.style.display = 'none';
-		  } else {
-			element.style.display = element.getAttribute('data-display') || 'block';
-		  }
+		function getHome(){
+			if (event.target.id === "settingsButton") {
+				location.href = "./index.html";
+			}
 		}
 	</script>
   </body>
