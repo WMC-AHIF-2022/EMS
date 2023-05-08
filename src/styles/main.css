@@ -5,7 +5,7 @@
     user-select: none; /* Standard syntax */
 }
 body {
-    background-image: url('../img/photovoltaic-491702.jpg');
+    background-color: #2596be;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
