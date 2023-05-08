@@ -3,34 +3,39 @@
   <head>
     <meta charset="UTF-8">
     <title>EMS - Energy Management System</title>
-    <link rel="stylesheet" type="text/css" href="./styles/main.css">
     <link rel="stylesheet" type="text/css" href="./styles/hoverBox.css">
+	<link rel="stylesheet" type="text/css" href="./styles/main.css">
+    <script src="./scripts/getData.js"></script>
+    <script src="./scripts/weather.js"></script>
+    <script src="./scripts/init.js"></script>
+    <script src="./scripts/stats.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="./scripts/settings.js"></script>
   </head>
-  <body>
+  <body onload='init()' style="overflow: hidden;">
   <div id="navbar" style="background-color: darkgrey;">
       <nav style="display: flex; justify-content: space-between; align-items: center; padding: 1rem;">
         <h2 style="margin: 0;" class="clickable" onclick="location.href = './index.html';"><b>EMS - Energie Management System</b></h2>
         <div style="display: flex;">
-          <h2 style="margin: 0 1rem 0 0;" class="clickable" onclick="location.href = './index.html';">Home</h2>
-          <h2 style="margin: 0;" class="activeNav clickable" onclick="location.href = './settings.html';">Settings</h2>
+          <h2 style="margin: 0;"><div class="container">
+			<h2 class="activeNav clickable" onclick="location.href = './index.html';">Settings  </h2>
+			<div class="box">
+				<div id="infoBox" style="padding: 3%;"></div>
+				<h2><b>Einstellungen:</b></h2>
+				<p>Einheit Strom: <input type="text" name="unitOfElectricity" id="unitOfElectricity" placeholder="z.b. kwh"></p>
+				<p>Währung: <select name="currency" id="currency"><option value="euro">Euro</option><option value="dollar">US-Dollar</option></select></p>
+				<p>Statistik: <select name="defaultStats" id="defaultStats"><option value="daily">täglich</option><option value="monthly">monatlich</option><option value="yearly">jährlich</option></select></p>
+				<p>Wohnort: <input type="text" name="homeCity" id="homeCity" placeholder="z.b. Linz"></p>
+				<button onclick="sendSettings()" class="clickable">Speichern</button>
+			</div>
+	</div></h2>
         </div>
       </nav>
     </div>
-  <div class="container">
-		<div class="box">
-			<div id="infoBox" style="padding: 3%;"></div>
-			<h2><b>Einstellungen:</b></h2>
-			<h4><b>Einheiten:</b></h4>
-			<p>Einheit Strom: <input type="text" name="unitOfElectricity" id="unitOfElectricity" placeholder="z.b. kwh"></p>
-			<p>Währung: <select name="currency" id="currency"><option value="euro">Euro</option><option value="dollar">US-Dollar</option></select></p>
-			<h4><b>Statistiken:</b></h4>
-			<p>Statistik: <select name="defaultStats" id="defaultStats"><option value="daily">täglich</option><option value="monthly">monatlich</option><option value="yearly">jährlich</option></select></p>
-			<h4><b>Orte:</b></h4>
-			<p>Wohnort: <input type="text" name="homeCity" id="homeCity" placeholder="z.b. Linz"></p>
-			<button onclick="sendSettings()" class="clickable">Speichern</button>
-		</div>
-	</div>
+	<div id="container" style="display: flex; justify-content: flex-start; align-items: center;">
+      <div id="weatherForecast" style="flex-basis: auto; margin-right: 2%; margin-top: -10%;"></div>
+      <canvas id="StatsChart" style="flex-basis: 100%;"></canvas>
+    </div>
 	<script>
 		(async () => {	
 			let settings = await getSettings();
@@ -39,6 +44,16 @@
 				document.getElementById(settings[i].setting).value = settings[i].value;
 			}
 		})();
+		
+		function toggleVisibility(element) {
+		  console.log(element);
+		  const display = getComputedStyle(element).display;
+		  if (display !== 'none') {
+			element.style.display = 'none';
+		  } else {
+			element.style.display = element.getAttribute('data-display') || 'block';
+		  }
+		}
 	</script>
   </body>
 </html>

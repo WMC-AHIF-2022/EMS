@@ -5,10 +5,7 @@
     user-select: none; /* Standard syntax */
 }
 body {
-    background-image: url('../img/photovoltaic-491702.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-color: #2596be;
 }
 .activeNav {
     text-decoration: underline;
