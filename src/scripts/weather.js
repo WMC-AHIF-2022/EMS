@@ -7,11 +7,12 @@ function formatDate(dateString) {
 }
 
 async function getWeatherData(city) {
-  const url = `http://ems-syp.000webhostapp.com/api/weather.php?city=Linz`;
+  const url = `http://ems-syp.000webhostapp.com/api/weather.php?city={city}`;
   const response = await fetch(url);
   const data = await response.json();
   const weatherData = data.forecast.forecastday;
   //console.log(weatherData);
+  document.getElementById('weatherForecast').innerHTML = "<b>"+city+"</b>";
   
   for(let i = 0; i < weatherData.length; i++){
           string = "";

@@ -70,7 +70,7 @@ function convertDateTime(inputDateTime) {
 }
 
 async function main() {
-    await getDataFromAPI(); // Aufruf der Funktion
+    let data = await getDataFromAPI(); // Aufruf der Funktion
 }
 
 main();
