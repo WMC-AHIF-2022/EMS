@@ -1,6 +1,6 @@
 function drawChart(data, labels){
-    //console.log("Drawing chart with Data: ", data);
-    //console.log("Drawing chart with Labels: ", labels);
+    console.log("Drawing chart with Data: ", data);
+    console.log("Drawing chart with Labels: ", labels);
     var ctx = document.getElementById("StatsChart")
     var canvas = ctx.getContext("2d");
     ctx.fillStyle = "rgba(0, 0, 255, 0.5)";
