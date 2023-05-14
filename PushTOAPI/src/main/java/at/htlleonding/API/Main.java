@@ -4,6 +4,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.util.Calendar;
 import java.util.Random;
+import java.util.Timer;
 
 public class Main {
 
@@ -44,7 +45,9 @@ public class Main {
     public static void main(String[] args) {
         Calendar currentTime = Calendar.getInstance();
         EnergyValue energyValue = generateRandomEnergyValue(currentTime);
-        System.out.println("Value: " + energyValue.getValue() + ", Type: " + energyValue.getType());
+        System.out.println("Value: " + energyValue.getValue() + ", Type: " + energyValue.getType() + "time: "+ currentTime.getTime());
+        Timer timer = new Timer();
+        timer.schedule(new ApiTask(), 0, 900000);
     }
 
 }
