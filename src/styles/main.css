@@ -20,3 +20,12 @@ body {
 .clickable {
     cursor: pointer;
 }
+#StatsChart{
+    transform: scale(75%,55%);
+    margin-left: -12%;
+    margin-bottom: 60%;
+}
+#weatherForecast{
+    margin-bottom: 50%;
+    margin-left: 0.5%;
+}

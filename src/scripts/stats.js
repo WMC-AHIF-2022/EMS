@@ -4,7 +4,6 @@ function drawChart(data, labels){
     var ctx = document.getElementById("StatsChart")
     var canvas = ctx.getContext("2d");
     ctx.fillStyle = "rgba(0, 0, 255, 0.5)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
     new Chart(ctx, {
         type: "line",
         data: {

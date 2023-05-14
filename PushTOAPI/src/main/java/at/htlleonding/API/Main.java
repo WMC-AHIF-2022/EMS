@@ -45,7 +45,7 @@ public class Main {
     public static void main(String[] args) {
         Calendar currentTime = Calendar.getInstance();
         EnergyValue energyValue = generateRandomEnergyValue(currentTime);
-        System.out.println("Value: " + energyValue.getValue() + ", Type: " + energyValue.getType() + "time: "+ currentTime.getTime());
+        System.out.println("Measurement: " + energyValue.getValue() + ", Type: " + energyValue.getType());
         Timer timer = new Timer();
         timer.schedule(new ApiTask(), 0, 900000);
     }
