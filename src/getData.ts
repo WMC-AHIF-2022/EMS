@@ -1,4 +1,4 @@
-async function getDataFromAPI(): Promise<void> {
+export async function getDataFromAPI() {
     try {
         const response = await fetch('https://ems-syp.000webhostapp.com/api/');
         //console.log(response);
@@ -15,17 +15,7 @@ async function getDataFromAPI(): Promise<void> {
             }
         }
         dataArray = processJSON(dataArray);
-        //DEV AUSGABE
-        let genArray = [];
-        let conArray = [];
-        for(let i = 0; i < dataArray.length; i++){
-            //console.log(dataArray[i]);
-            if(dataArray[i].type === 'generation'){
-                genArray.push(dataArray[i]);
-            }else if(dataArray[i].type === 'consumption'){
-                conArray.push(dataArray[i]);
-            }
-        }
+      return dataArray;
     } catch (error) {
         console.error('Fehler beim Abrufen der Daten:', error);
     }

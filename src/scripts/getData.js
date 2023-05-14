@@ -7,42 +7,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-function getDataFromAPI() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const response = yield fetch('https://ems-syp.000webhostapp.com/api/');
-            //console.log(response);
-            const data = yield response.json();
-            console.log(data);
-            let dataArray = Array.isArray(data) ? data : [data];
-            //console.log(dataArray);
-            for (let i = 0; i < dataArray.length; i++) {
-                const convertedDate = new Date(convertDateTime(dataArray[i].timestamp));
-                if (!isNaN(convertedDate.getTime())) {
-                    dataArray[i].time = convertedDate;
-                }
-                else {
-                    dataArray[i].time = new Date(0);
-                }
-            }
-            dataArray = processJSON(dataArray);
-            //DEV AUSGABE
-            let genArray = [];
-            let conArray = [];
-            for (let i = 0; i < dataArray.length; i++) {
-                //console.log(dataArray[i]);
-                if (dataArray[i].type === 'generation') {
-                    genArray.push(dataArray[i]);
-                }
-                else if (dataArray[i].type === 'consumption') {
-                    conArray.push(dataArray[i]);
-                }
+async function getDataFromAPI() {
+    try {
+        const response = await fetch('https://ems-syp.000webhostapp.com/api/');
+        const data = await response.json();
+        console.log(data);
+
+        let dataArray = Array.isArray(data) ? data : [data];
+
+        for (let i = 0; i < dataArray.length; i++) {
+            const convertedDate = new Date(convertDateTime(dataArray[i].timestamp));
+            if (!isNaN(convertedDate.getTime())) {
+                dataArray[i].time = convertedDate;
+            } else {
+                dataArray[i].time = new Date(0);
             }
         }
-        catch (error) {
-            console.error('Fehler beim Abrufen der Daten:', error);
-        }
-    });
+
+        dataArray = processJSON(dataArray);
+
+        return dataArray;
+    } catch (error) {
+        console.error('Fehler beim Abrufen der Daten:', error);
+    }
 }
 function processJSON(jsonArray) {
     const sortedArray = jsonArray.sort((a, b) => {
