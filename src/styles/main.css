@@ -25,5 +25,6 @@ body {
     font-size: 80%;
 }
 #chartSettingsContainer{
-    margin-top: 10%;
+    margin-top: 8%;
+    text-align: center;
 }
