@@ -20,7 +20,8 @@ const intervalInputs = document.querySelectorAll('input[name="interval"]');
 function changeDate(dateStr, delta) {
     const date = new Date(dateStr.split(".").reverse().join("-"));
     date.setDate(date.getDate() + delta);
-    return `${date.getDate()}.${("0" + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()}`;
+    currRange.innerHTML = `${("0" + date.getDate()).slice(-2)}.${("0" + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()}`;
+    //return `${date.getDate()}.${("0" + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()}`;
 }
 function changeEuDateToUSDate(datum) {
     const parts = datum.split(".");
@@ -35,6 +36,7 @@ function getDaysInMonth(month) {
 function change(action) {
     const currRangeEl = document.getElementById("currRange");
     const currRangeValue = currRangeEl.innerHTML;
+    //console.log(currRangeValue);
 
     const intervalFns = {
         daily: () => changeDate(currRangeValue, action === "prev" ? -1 : 1),
@@ -54,12 +56,13 @@ function change(action) {
         }
     };
 
-    const selectedIntervalFn = intervalFns[selectedInterval];
-    console.log(selectedInterval)
-    console.log(selectedIntervalFn);
+    selectedInterval = document.querySelector('input[name="interval"]:checked');
+    const selectedIntervalFn = intervalFns[selectedInterval.value];
+    //console.log(selectedInterval.value)
+    //console.log(selectedIntervalFn);
     if (selectedIntervalFn) {
         selectedIntervalFn();
-        drawDiagram();
+        //drawDiagram();
     }
 }
 // Helper function to handle checkbox changes
