@@ -4,6 +4,7 @@ function drawChart(data, labels){
     var ctx = document.getElementById("myChart")
     var canvas = ctx.getContext("2d");
     ctx.fillStyle = "rgba(0, 0, 255, 0.5)";
+    ctx.style.backgroundColor = "white";
     new Chart(ctx, {
         type: "line",
         data: {
@@ -16,6 +17,13 @@ function drawChart(data, labels){
                 borderWidth: 2,
                 fill: false,
             }, ],
-        }
+        },
+        options: {
+            plugins: {
+                customCanvasBackgroundColor: {
+                    color: 'white',
+                }
+            }
+        },
     });
 }
