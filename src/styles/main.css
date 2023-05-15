@@ -3,6 +3,7 @@
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
+    /*color: white;*/
 }
 body {
     background-color: #2596be;
@@ -23,8 +24,13 @@ body {
     margin-bottom: -4%;
     margin-left: 0.5%;
     font-size: 80%;
+    color: black;
 }
 #chartSettingsContainer{
     margin-top: 8%;
     text-align: center;
+}
+#navbar {
+    background-color: #228B22 !important;
+    color: #90EE90 !important;
 }

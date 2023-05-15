@@ -11,8 +11,7 @@
 
   </head>
   <body onload='init()' style="overflow-x: hidden;">
-
-  <div id="navbar" style="background-color: #228B22; color: #90EE90;">
+  <div id="navbar">
       <nav style="display: flex; justify-content: space-between; align-items: center; padding: 1rem;">
         <h2 style="margin: 0;" class="clickable" onclick="location.href = './index.html';"><b>EMS - Energie Management System</b></h2>
         <div style="display: flex;">
@@ -34,9 +33,9 @@
 <!--	  <div id="chartSettings" style="flex-basis: 30%; margin-top: -10%; background-color: grey;"></div>-->
     </div>
   <div id="chartSettingsContainer">
-    <div id="formContainer" style="flex-basis: 30%; margin-top: -10%; background-color: grey;">
+    <div id="formContainer" style="flex-basis: 30%; margin-top: -10%; background-color: grey; color:white;">
       <form>
-        <b>Diagramm auswählen:</b>
+        <b >Diagramm auswählen:</b>
         <input type="checkbox" id="consumption" name="consumption" value="consumption" checked>
         <label for="consumption">Stromverbrauch</label>
         <input type="checkbox" id="generation" name="generation" value="generation">
@@ -51,7 +50,7 @@
         <input type="radio" id="monthly" name="interval" value="monthly" checked>
         <label for="daily">Stündlich</label>
         <input type="radio" id="daily" name="interval" value="daily">
-        <button type="button" onclick='change("prev")'><</button>&nbsp;<span id="currRange">Januar</span>&nbsp;<button type="button" onclick='change("next")'>></button>
+        <button type="button" style="color: black;" onclick='change("prev")'><</button>&nbsp;<span id="currRange">Januar</span>&nbsp;<button type="button" style="color: black;" onclick='change("next")'>></button>
       </form>
     </div>
   </div>

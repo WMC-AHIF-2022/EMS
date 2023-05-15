@@ -24,7 +24,7 @@ async function getWeatherData(city) {
     const data = await response.json();
     const weatherData = data.forecast.forecastday;
     //console.log(weatherData);
-    document.getElementById('weatherForecast').innerHTML = "<h5>Wetterbericht <b>"+formatString(city)+"</b></h5>";
+    document.getElementById('weatherForecast').innerHTML = '<h5 style="color: white;">Wetterbericht <b>'+formatString(city)+'</b></h5>';
 
     for(let i = 0; i < weatherData.length; i++){
         string = "";
