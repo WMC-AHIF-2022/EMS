@@ -3,6 +3,7 @@ const generationCheckbox = document.getElementById("generation");
 const balanceCheckbox = document.getElementById("balance");
 const priceCheckbox = document.getElementById("price");
 const currRange = document.getElementById("currRange");
+const chartSettingsContainer = document.getElementById("chartSettingsContainer");
 const year = new Date().getFullYear();
 let dailyLabels = [];
 for (let i = 1; i <= 31; i++) {
@@ -145,6 +146,7 @@ async function drawDiagram() {
     console.log(dataTodraw);
     console.log(currentLabel);
     console.log(HourLabels);
+    chartSettingsContainer.display = "block";
     drawChart(dataTodraw,currentLabel);
     // if(consumptionCheckbox.checked){
     //     if(intervalInputs.)
