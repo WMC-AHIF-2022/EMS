@@ -48,22 +48,29 @@
       <div id="chartSettingsContainer">
           <div id="formContainer" style="flex-basis: 30%; margin-top: -10%; background-color: grey;">
               <form>
-                  <b>Diagramm auswählen:</b>
-                  <input type="checkbox" id="consumption" name="consumption" value="consumption" checked>
-                  <label for="consumption">Stromverbrauch</label><
-                  <input type="checkbox" id="generation" name="generation" value="generation">
-                  <label for="generation">Stromgewinnung</label>
-                  <input type="checkbox" id="balance" name="balance" value="balance">
-                  <label for="balance">Netto-Strombilanz</label>
-                  <input type="checkbox" id="price" name="price" value="price">
-                  <label for="price">Gesamtpreis</label>
-                  <label for="yearly">Monatlich</label>
-                  <input type="radio" id="yearly" name="interval" value="yearly">
-                  <label for="monthly">Täglich</label>
-                  <input type="radio" id="monthly" name="interval" value="monthly" checked>
-                  <label for="daily">Stündlich</label>
-                  <input type="radio" id="daily" name="interval" value="daily">
-                  <button type="button" onclick='change("prev")'><</button>&nbsp;<span id="currRange">Januar</span>&nbsp;<button type="button" onclick='change("next")'>></button>
+                  <p>
+                      <b>Diagramm auswählen:</b>
+                      <br>
+                      <input type="checkbox" id="consumption" name="consumption" value="consumption" checked>
+                      <label for="consumption">Stromverbrauch</label><
+                      <input type="checkbox" id="generation" name="generation" value="generation">
+                      <label for="generation">Stromgewinnung</label>
+                      <input type="checkbox" id="balance" name="balance" value="balance">
+                      <label for="balance">Netto-Strombilanz</label>
+                      <input type="checkbox" id="price" name="price" value="price">
+                      <label for="price">Gesamtpreis</label>
+                  </p>
+                  <p>
+                      <label for="yearly">Monatlich</label>
+                      <input type="radio" id="yearly" name="interval" value="yearly">
+                      <label for="monthly">Täglich</label>
+                      <input type="radio" id="monthly" name="interval" value="monthly" checked>
+                      <label for="daily">Stündlich</label>
+                      <input type="radio" id="daily" name="interval" value="daily">
+                  </p>
+                  <p>
+                      <button type="button" onclick='change("prev")'><</button>&nbsp;<span id="currRange">Januar</span>&nbsp;<button type="button" onclick='change("next")'>></button>
+                  </p>
               </form>
           </div>
       </div>
