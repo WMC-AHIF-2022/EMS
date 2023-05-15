@@ -30,6 +30,7 @@ async function getWeatherData(city) {
         string = "";
         let forecast = weatherData[i];
         string += "<div style='background-color: darkgrey; border-radius: 3%; padding: 3%; margin-top: 1%;'><h5>"+formatDate(forecast.date)+"</h5>";
+        string += '<img src="'+forecast.day.condition.icon+'" style="margin-left: 68%; margin-top: -20%; display: inline;"/>';
         string += "<p>"+forecast.day.condition.text+"<br>";
         string += Math.round(forecast.day.avgtemp_c)+"°C<br>";
         string += Math.round(forecast.day.daily_chance_of_rain)+"% Regen | "+Math.round(forecast.day.avghumidity)+"% Luftfeuchtigkeit</p></div>";
