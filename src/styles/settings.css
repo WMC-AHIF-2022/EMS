@@ -1,0 +1,14 @@
+#StatsChart{
+    transform: scale(95%,80%);
+    margin-left: 20%;
+    margin-top: -35%;
+}
+#weatherForecast{
+    margin-bottom: -4%;
+    margin-left: 0.5%;
+    font-size: 190%;
+}
+#chartSettingsContainer{
+    margin-top: 12%;
+
+}
