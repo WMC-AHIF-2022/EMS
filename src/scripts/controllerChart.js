@@ -118,7 +118,7 @@ async function drawDiagram() {
     let currentLabel = [];
     if(consumptionCheckbox.checked){
         if(selectedInterval == 'daily'){
-            for (let i = 0; i < dataArray.length;i++){
+            for (let i = 0; i < dataArray.length -1;i++){
                 let split = dataArray[i].timestamp.split(" ");
                 if(split[0] === changeEuDateToUSDate(currRange.innerHTML)){
                     if(dataArray[i].type == 'consumption'){

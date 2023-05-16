@@ -1,8 +1,7 @@
 function drawChart(data, labels){
     console.log("Drawing chart with Data: ", data);
     console.log("Drawing chart with Labels: ", labels);
-    var ctx = document.getElementById("myChart")
-    var canvas = ctx.getContext("2d");
+    var ctx = document.getElementById("myChart").ctx.getContext("2d");
     ctx.fillStyle = "rgba(0, 0, 255, 0.5)";
     ctx.style.backgroundColor = "white";
     new Chart(ctx, {
