@@ -1,10 +1,19 @@
 function drawChart(data, labels){
     console.log("Drawing chart with Data: ", data);
     console.log("Drawing chart with Labels: ", labels);
-    var ctx = document.getElementById("myChart").ctx.getContext("2d");
-    ctx.fillStyle = "rgba(0, 0, 255, 0.5)";
-    ctx.style.backgroundColor = "white";
-    new Chart(ctx, {
+
+    const selectedCheckboxes = data.filter(c => document.getElementById(c.name).checked);
+    const chartData1 = {
+        labels: selectedInterval === 'daily' ? HourLabels : selectedInterval === 'monthly' ? dailyLabels : monthLabels,
+        datasets: selectedCheckboxes.map(c => ({
+            label: c.label,
+            data: c.data[selectedInterval === 'daily' ? 0 : 1],
+            backgroundColor: c.backgroundColor,
+            borderColor: c.borderColor,
+            fill: false
+        }))
+    };
+    var chartData = {
         type: "line",
         data: {
             labels: labels,
@@ -24,5 +33,20 @@ function drawChart(data, labels){
                 }
             }
         },
+    }
+    const chartOptions = {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    };
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'line',
+        data: chartData,
+        options: chartOptions
     });
 }

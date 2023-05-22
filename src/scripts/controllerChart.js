@@ -114,19 +114,38 @@ async function drawDiagram() {
     let dataArray = await getDataFromAPI();
     console.log(intervalInputs);
     console.log(selectedInterval);
-    let dataTodraw = [];
+    let dataToSplit = [];
+    let data = [];
     let currentLabel = [];
     if(consumptionCheckbox.checked){
         if(selectedInterval == 'daily'){
             for (let i = 0; i < dataArray.length -1;i++){
                 let split = dataArray[i].timestamp.split(" ");
                 if(split[0] === changeEuDateToUSDate(currRange.innerHTML)){
-                    if(dataArray[i].type == 'consumption'){
-                        console.log(dataArray[i].type);
-                        dataTodraw.push(dataArray[i]);
+                    // if(dataArray[i].type == 'consumption'){
+                    //     dataToSplit.push(dataArray[i]);
+                    // }
+                    // else {
+                    //     dataGeneration.push(dataArray[i])
+                    // }
+                    dataToSplit.push(dataArray[i]);
+                }
+                console.log(dataToSplit);
+            }
+            for (let x = 0; x < dataToSplit;x++){
+                let consumption = 0;
+                let generation = 0;
+                let measurement = 0;
+                for (let i = 0; i < 4;i++){
+                    if(dataToSplit[i].type == 'consumption'){
+                        consumption += dataToSplit[i].measurement;
+                    }
+                    else {
+                        generation +=  dataToSplit[i].measurement;
                     }
                 }
-                console.log(dataTodraw);
+                measurement = generation - consumption;
+                data.push(measurement);
             }
             currentLabel = HourLabels.slice();
             console.log(currentLabel);
@@ -138,7 +157,7 @@ async function drawDiagram() {
                 let changedUsDate = changeEuDateToUSDate(currRange.innerHTML);
                 let splitChangeUsDate = changedUsDate.split("-");
                 if(splitted[1] === splitChangeUsDate[1]){
-                    dataTodraw.push(dataArray[i]);
+                    dataToSplit.push(dataArray[i]);
                 }
 
             }
@@ -146,17 +165,24 @@ async function drawDiagram() {
         }
     }
 
-    console.log(dataTodraw);
+    console.log(dataToSplit);
     console.log(currentLabel);
     console.log(HourLabels);
     chartSettingsContainer.display = "block";
-    drawChart(dataTodraw,currentLabel);
+    // const checkboxes = [
+    //     { name: 'consumption', label: 'Stromverbrauch', data: [dailyDataConsumption, monthlyDataConsumption], backgroundColor: '#ffcd56', borderColor: '#ffcd56' },
+    //     { name: 'generation', label: 'Stromgewinnung', data: [dailyDataProduction, monthlyDataProduction], backgroundColor: '#36a2eb', borderColor: '#36a2eb' },
+    //     { name: 'balance', label: 'Netto-Strombilanz', data: [dailyDataNetto, monthlyDataNetto], backgroundColor: '#4bc0c0', borderColor: '#4bc0c0' },
+    //     { name: 'price', label: 'Gesamtpreis', data: [selectedInterval === 'daily' ? dailyData : monthlyDataPrice], backgroundColor: '#ffcd56', borderColor: '#ffcd56' }
+    // ];
+    drawChart(dataToSplit,currentLabel);
+
     // if(consumptionCheckbox.checked){
     //     if(intervalInputs.)
     // }
     // const chartData = {
     //     labels: selectedInterval === 'daily' ? HourLabels : selectedInterval === 'monthly' ? dailyLabels : monthLabels,
-    //     datasets: dataTodraw.map(c => ({
+    //     datasets: dataToSplit.map(c => ({
     //         label: c.label,
     //         data: c.data[selectedInterval === 'daily' ? 0 : 1],
     //         backgroundColor: c.backgroundColor,
