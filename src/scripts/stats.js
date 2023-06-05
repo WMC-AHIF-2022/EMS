@@ -2,7 +2,8 @@ function drawChart(data, labels){
     console.log("Drawing chart with Data: ", data);
     console.log("Drawing chart with Labels: ", labels);
 
-    const selectedCheckboxes = data.filter(c => document.getElementById(c.name).checked);
+    //const selectedCheckboxes = data.filter(c => document.getElementById(c.type).checked); //TODO: Repair Code
+    const selectedCheckboxes = data.filter(c => c.type === "consumption");
     const chartData1 = {
         labels: selectedInterval === 'daily' ? HourLabels : selectedInterval === 'monthly' ? dailyLabels : monthLabels,
         datasets: selectedCheckboxes.map(c => ({
