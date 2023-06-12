@@ -18,9 +18,12 @@ function drawChart(data, label, checkbox){
     // };
     const chartData = {
         type: "line",
-        data:data,
-        backgroundColor:selectCheckbox.backgroundColor,
-        borderColor:selectCheckbox.borderColor,
+        labels:label,
+        datasets: [{
+            data:data,
+            backgroundColor:selectCheckbox.backgroundColor,
+            borderColor:selectCheckbox.borderColor,
+        }],
         fill:false
     }
 
@@ -66,8 +69,11 @@ function drawChart(data, label, checkbox){
         // Erstelle das Diagramm
         const myChart = new Chart(ctx, {
             type: 'line',
-            data: chartData
+            data: chartData,
         });
+        if(myChart !== undefined){
+            document.getElementById('loadingChart').style.display = "none";
+        }
     } else {
         console.error("Canvas-Element nicht gefunden.");
     }

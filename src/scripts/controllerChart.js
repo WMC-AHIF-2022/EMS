@@ -223,5 +223,5 @@ async function drawDiagram() {
     //     data: chartData,
     //     options: chartOptions
     // });
-    document.getElementById("loading").style.display = "none";
+
 }
