@@ -133,7 +133,7 @@ async function drawDiagram() {
                 if(split[0] === changeEuDateToUSDate(currRange.innerHTML)){
                     dataToSplit.push(dataArray[i]);
                 }
-                // console.log(`DataToSplit: ${JSON.stringify(dataToSplit)}`);
+                 console.log(`DataToSplit: ${JSON.stringify(dataToSplit)}`);
                 //console.log(`Measurement: ${JSON.stringify(dataToSplit[50])}`);
             }
             for (let x = 1; x < dataToSplit.length;x++){
