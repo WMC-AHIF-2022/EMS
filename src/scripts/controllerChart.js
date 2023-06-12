@@ -109,6 +109,15 @@ intervalInputs.forEach(input => {
 // function removeElementFromArray(array, index) {
 //     const newArray = [...array.slice(0, index), ...array.slice(index + 1)];
 //     return newArray;
+function findLine(checkboxes, currentLabel) {
+    for (let i = 0; i < checkboxes.length;i++){
+        if(currentLabel === checkboxes[i].label){
+            return checkboxes[i];
+        }
+    }
+    return undefined;
+}
+
 // }
 async function drawDiagram() {
     let dataArray = await getDataFromAPI();
@@ -122,12 +131,6 @@ async function drawDiagram() {
             for (let i = 0; i < dataArray.length -1;i++){
                 let split = dataArray[i].timestamp.split(" ");
                 if(split[0] === changeEuDateToUSDate(currRange.innerHTML)){
-                    // if(dataArray[i].type == 'consumption'){
-                    //     dataToSplit.push(dataArray[i]);
-                    // }
-                    // else {
-                    //     dataGeneration.push(dataArray[i])
-                    // }
                     dataToSplit.push(dataArray[i]);
                 }
                 console.log(dataToSplit);
@@ -169,13 +172,20 @@ async function drawDiagram() {
     console.log(currentLabel);
     console.log(HourLabels);
     chartSettingsContainer.display = "block";
+    const checkboxes = [
+        {label: 'consumption', data:data, backgroundColor:'#ffcd56', borderColor: '#ffcd56' },
+        {label: 'generation', data:data, backgroundColor: '#36a2eb', borderColor: '#36a2eb' },
+        {label: 'balance', data:data,  backgroundColor: '#4bc0c0', borderColor: '#4bc0c0' },
+        {label:'price', data: data,  backgroundColor: '#ffcd56', borderColor: '#ffcd56' }
+    ]
     // const checkboxes = [
     //     { name: 'consumption', label: 'Stromverbrauch', data: [dailyDataConsumption, monthlyDataConsumption], backgroundColor: '#ffcd56', borderColor: '#ffcd56' },
     //     { name: 'generation', label: 'Stromgewinnung', data: [dailyDataProduction, monthlyDataProduction], backgroundColor: '#36a2eb', borderColor: '#36a2eb' },
     //     { name: 'balance', label: 'Netto-Strombilanz', data: [dailyDataNetto, monthlyDataNetto], backgroundColor: '#4bc0c0', borderColor: '#4bc0c0' },
     //     { name: 'price', label: 'Gesamtpreis', data: [selectedInterval === 'daily' ? dailyData : monthlyDataPrice], backgroundColor: '#ffcd56', borderColor: '#ffcd56' }
     // ];
-    drawChart(dataToSplit,currentLabel);
+    const drawLine = findLine(checkboxes, currentLabel);
+    drawChart(data,currentLabel, drawLine);
 
     // if(consumptionCheckbox.checked){
     //     if(intervalInputs.)
