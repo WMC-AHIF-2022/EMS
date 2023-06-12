@@ -1,10 +1,11 @@
-function drawChart(data, labels, drawLine){
+function drawChart(data, label, checkbox){
     console.log("Drawing chart with Data: ", data);
-    console.log("Drawing chart with Labels: ", labels);
+    console.log("Drawing chart with Labels: ", label);
 
     //const selectedCheckboxes = data.filter(c => document.getElementById(c.type).checked); //TODO: Repair Code
     //const selectedCheckboxes = data.filter(c => c.type === "consumption");
 
+    const selectCheckbox = checkbox.filter(c => document.getElementById(c.name).checked);
     // const chartData1 = {
     //     labels: selectedInterval === 'daily' ? HourLabels : selectedInterval === 'monthly' ? dailyLabels : monthLabels,
     //     datasets: selectedCheckboxes.map(c => ({
@@ -15,40 +16,59 @@ function drawChart(data, labels, drawLine){
     //         fill: false
     //     }))
     // };
-    var chartData = {
+    const chartData = {
         type: "line",
-        data: {
-            labels: labels,
-            datasets: [{
-                label: "Values",
-                data: data,
-                backgroundColor: "red",
-                borderColor: "red",
-                borderWidth: 2,
-                fill: false,
-            }, ],
-        },
-        options: {
-            plugins: {
-                customCanvasBackgroundColor: {
-                    color: 'white',
-                }
-            }
-        },
+        data:data,
+        backgroundColor:selectCheckbox.backgroundColor,
+        borderColor:selectCheckbox.borderColor,
+        fill:false
     }
-    const chartOptions = {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    };
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
-        type: 'line',
-        data: chartData,
-        options: chartOptions
-    });
+
+    // var chartData = {
+    //     type: "line",
+    //     data: {
+    //         labels: label,
+    //         datasets: [{
+    //             label: "Values",
+    //             data: data,
+    //             backgroundColor: "red",
+    //             borderColor: "red",
+    //             borderWidth: 2,
+    //             fill: false,
+    //         }, ],
+    //     },
+    //     options: {
+    //         plugins: {
+    //             customCanvasBackgroundColor: {
+    //                 color: 'white',
+    //             }
+    //         }
+    //     },
+    // }
+    // const chartOptions = {
+    //     scales: {
+    //         yAxes: [{
+    //             ticks: {
+    //                 beginAtZero: true
+    //             }
+    //         }]
+    //     }
+    // };
+    // const ctx = document.getElementById('myChart').getContext('2d');
+    // const myChart = new Chart(ctx, {
+    //     type: 'line',
+    //     data: chartData,
+    // });
+    const canvas = document.getElementById('myChart');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+
+        // Erstelle das Diagramm
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: chartData
+        });
+    } else {
+        console.error("Canvas-Element nicht gefunden.");
+    }
 }

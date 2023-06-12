@@ -133,22 +133,27 @@ async function drawDiagram() {
                 if(split[0] === changeEuDateToUSDate(currRange.innerHTML)){
                     dataToSplit.push(dataArray[i]);
                 }
-                console.log(dataToSplit);
+                // console.log(`DataToSplit: ${JSON.stringify(dataToSplit)}`);
+                //console.log(`Measurement: ${JSON.stringify(dataToSplit[50])}`);
             }
-            for (let x = 0; x < dataToSplit;x++){
+            for (let x = 1; x < dataToSplit.length;x++){
                 let consumption = 0;
                 let generation = 0;
                 let measurement = 0;
-                for (let i = 0; i < 4;i++){
-                    if(dataToSplit[i].type == 'consumption'){
-                        consumption += dataToSplit[i].measurement;
-                    }
-                    else {
-                        generation +=  dataToSplit[i].measurement;
-                    }
+                // console.log(`lol ${JSON.stringify(dataToSplit[x])}`);
+                if(dataToSplit[x].type == 'consumption'){
+                    consumption += dataToSplit[x].measurement;
                 }
-                measurement = generation - consumption;
-                data.push(measurement);
+                else {
+                    generation +=  dataToSplit[x].measurement;
+                }
+                if(x % 4 === 0){
+                    measurement = generation - consumption;
+                    data.push(measurement);
+                    measurement = 0;
+                    generation = 0;
+                    consumption = 0;
+                }
             }
             currentLabel = HourLabels.slice();
             console.log(currentLabel);
@@ -170,13 +175,14 @@ async function drawDiagram() {
 
     console.log(dataToSplit);
     console.log(currentLabel);
+    console.log(`real Data: ${data}`);
     console.log(HourLabels);
     chartSettingsContainer.display = "block";
-    const checkboxes = [
-        {label: 'consumption', data:data, backgroundColor:'#ffcd56', borderColor: '#ffcd56' },
-        {label: 'generation', data:data, backgroundColor: '#36a2eb', borderColor: '#36a2eb' },
-        {label: 'balance', data:data,  backgroundColor: '#4bc0c0', borderColor: '#4bc0c0' },
-        {label:'price', data: data,  backgroundColor: '#ffcd56', borderColor: '#ffcd56' }
+    const checkbox = [
+        {name: 'consumption',label: 'consumption', data:data, backgroundColor:'#ffcd56', borderColor: '#ffcd56' },
+        {name: 'generation',label: 'generation', data:data, backgroundColor: '#36a2eb', borderColor: '#36a2eb' },
+        {name: 'balance',label: 'balance', data:data,  backgroundColor: '#4bc0c0', borderColor: '#4bc0c0' },
+        {name: 'price',label:'price', data: data,  backgroundColor: '#ffcd56', borderColor: '#ffcd56' }
     ]
     // const checkboxes = [
     //     { name: 'consumption', label: 'Stromverbrauch', data: [dailyDataConsumption, monthlyDataConsumption], backgroundColor: '#ffcd56', borderColor: '#ffcd56' },
@@ -184,8 +190,8 @@ async function drawDiagram() {
     //     { name: 'balance', label: 'Netto-Strombilanz', data: [dailyDataNetto, monthlyDataNetto], backgroundColor: '#4bc0c0', borderColor: '#4bc0c0' },
     //     { name: 'price', label: 'Gesamtpreis', data: [selectedInterval === 'daily' ? dailyData : monthlyDataPrice], backgroundColor: '#ffcd56', borderColor: '#ffcd56' }
     // ];
-    const drawLine = findLine(checkboxes, currentLabel);
-    drawChart(data,currentLabel, drawLine);
+    const drawLine = findLine(checkbox, currentLabel);
+    drawChart(data,currentLabel, checkbox);
 
     // if(consumptionCheckbox.checked){
     //     if(intervalInputs.)

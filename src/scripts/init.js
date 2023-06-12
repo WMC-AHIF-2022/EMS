@@ -18,7 +18,7 @@ async function init(){
 
         console.log("Data:", Data);
         console.log("Labels:", labels);
-        drawChart(Data, labels);
+        // drawChart(Data, labels);
     });
     // Date date = new Date();
     // let currentMonth = date.getMonth() + 1;
