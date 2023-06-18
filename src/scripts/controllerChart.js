@@ -92,6 +92,37 @@ balanceCheckbox.addEventListener("change", function() {
     handleCheckboxChange(balanceCheckbox, [priceCheckbox]);
 });
 
+function getCurrentDate() {
+    var date = new Date();
+    var day = date.getDate();
+    var month = date.getMonth() + 1; // Monate im Date-Objekt sind nullbasiert, daher +1
+    var year = date.getFullYear();
+
+    // Führende Nullen hinzufügen, falls Tag oder Monat einstellig sind
+    if (day < 10) {
+        day = '0' + day;
+    }
+    if (month < 10) {
+        month = '0' + month;
+    }
+
+    var formattedDate = day + '.' + month + '.' + year;
+    return formattedDate;
+}
+
+function getCurrentMonthGerman() {
+    var months = [
+        'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
+        'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'
+    ];
+
+    var date = new Date();
+    var monthIndex = date.getMonth();
+    var germanMonth = months[monthIndex];
+
+    return germanMonth;
+}
+
 // Attach change event listener to interval inputs
 intervalInputs.forEach(input => {
     input.addEventListener('change', function(event) {
@@ -99,11 +130,11 @@ intervalInputs.forEach(input => {
         selectedInterval = selectedIntervalTwo;
 
         if (selectedIntervalTwo === "monthly") {
-            currRange.innerHTML = "Januar";
+            currRange.innerHTML = getCurrentMonthGerman();
         } else if (selectedIntervalTwo === "yearly") {
             currRange.innerHTML = year;
         } else {
-            currRange.innerHTML = `01.01.${year}`;
+            currRange.innerHTML = getCurrentDate();
         }
         drawDiagram();
     });
