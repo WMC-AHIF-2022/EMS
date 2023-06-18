@@ -33,8 +33,10 @@ public class ApiTask extends TimerTask {
             connection.getInputStream();
             System.out.println("API-Anfrage erfolgreich gesendet!");
             System.out.println(connection.getResponseCode());
+            System.out.println(connection.getResponseMessage());
         } catch (Exception e) {
             e.printStackTrace();
+            e.getMessage();
         }
     }
 }

@@ -6,6 +6,7 @@ const currRange = document.getElementById("currRange");
 const chartSettingsContainer = document.getElementById("chartSettingsContainer");
 const year = new Date().getFullYear();
 let dailyLabels = [];
+let currentChart = undefined;
 for (let i = 1; i <= 31; i++) {
     dailyLabels.push(i);
 }
@@ -24,9 +25,10 @@ function changeDate(dateStr, delta) {
     //return `${date.getDate()}.${("0" + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()}`;
 }
 function changeEuDateToUSDate(datum) {
+    console.log(datum);
     const parts = datum.split(".");
-    const isoDatum = `${parts[2]}-${parts[1].padStart(2, "0")}-${parts[0].padStart(2, "0")}`;
-    return isoDatum;
+    console.log(parts);
+    return `${parts[2]}-${parts[1].padStart(2, "0")}-${parts[0].padStart(2, "0")}`;
 }
 
 function getDaysInMonth(month) {
@@ -62,7 +64,7 @@ function change(action) {
     //console.log(selectedIntervalFn);
     if (selectedIntervalFn) {
         selectedIntervalFn();
-        //drawDiagram();
+        drawDiagram();
     }
 }
 // Helper function to handle checkbox changes
@@ -117,31 +119,41 @@ function findLine(checkboxes, currentLabel) {
     }
     return undefined;
 }
-
 // }
 async function drawDiagram() {
     let dataArray = await getDataFromAPI();
-    console.log(intervalInputs);
-    console.log(selectedInterval);
     let dataToSplit = [];
     let data = [];
     let currentLabel = [];
+    let stepOut = false;
+    let demodata = [0,0,0,0,0,0,0,0,0,0];
+    const checkbox = [
+        {name: 'consumption',label: 'consumption', data:data, backgroundColor:'#ffffff', borderColor: '#ffcd56' },
+        {name: 'generation',label: 'generation', data:data, backgroundColor: '#36a2eb', borderColor: '#36a2eb' },
+        {name: 'balance',label: 'balance', data:data,  backgroundColor: '#4bc0c0', borderColor: '#4bc0c0' },
+        {name: 'price',label:'price', data: data,  backgroundColor: '#ffcd56', borderColor: '#ffcd56' }
+    ]
+    let currChart = drawChart(demodata, HourLabels.slice(), checkbox, currentChart);
+    // console.log(intervalInputs);
+    // console.log(selectedInterval);
+
     if(consumptionCheckbox.checked){
-        if(selectedInterval == 'daily'){
+        if(selectedInterval === 'daily'){
             for (let i = 0; i < dataArray.length -1;i++){
                 let split = dataArray[i].timestamp.split(" ");
+                console.log(currRange.innerHTML);
                 if(split[0] === changeEuDateToUSDate(currRange.innerHTML)){
                     dataToSplit.push(dataArray[i]);
                 }
-                 console.log(`DataToSplit: ${JSON.stringify(dataToSplit)}`);
+                 //console.log(`DataToSplit: ${JSON.stringify(dataToSplit)}`);
                 //console.log(`Measurement: ${JSON.stringify(dataToSplit[50])}`);
             }
-            for (let x = 1; x < dataToSplit.length;x++){
+            for (let x = 1; x < dataToSplit.length && !stepOut;x++){
                 let consumption = 0;
                 let generation = 0;
                 let measurement = 0;
                 // console.log(`lol ${JSON.stringify(dataToSplit[x])}`);
-                if(dataToSplit[x].type == 'consumption'){
+                if(dataToSplit[x].type === 'consumption'){
                     consumption += dataToSplit[x].measurement;
                 }
                 else {
@@ -154,74 +166,61 @@ async function drawDiagram() {
                     generation = 0;
                     consumption = 0;
                 }
+                if(measurement.length === 24){
+                    stepOut = true;
+                }
             }
             currentLabel = HourLabels.slice();
             console.log(currentLabel);
         }
-        else if(selectedInterval == 'monthly'){
-            for (let i = 0; i < dataArray.length;i++){
+        else if(selectedInterval === 'monthly'){
+            for (let i = 0; i < dataArray.length -1;i++){
                 let split = dataArray[i].timestamp.split(" ");
-                let splitted = split[0].split("-");
-                let changedUsDate = changeEuDateToUSDate(currRange.innerHTML);
-                let splitChangeUsDate = changedUsDate.split("-");
-                if(splitted[1] === splitChangeUsDate[1]){
-                    dataToSplit.push(dataArray[i]);
+                dataToSplit.push(dataArray[i]);
+                for (let x = 1; x < dataToSplit.length && !stepOut;x++){
+                    let consumption = 0;
+                    let generation = 0;
+                    let measurement = 0;
+                    // console.log(`lol ${JSON.stringify(dataToSplit[x])}`);
+                    if(dataToSplit[x].type === 'consumption'){
+                        consumption += dataToSplit[x].measurement;
+                    }
+                    else {
+                        generation +=  dataToSplit[x].measurement;
+                    }
+                    if(x % 95 === 0){
+                        measurement = generation - consumption;
+                        data.push(measurement);
+                        measurement = 0;
+                        generation = 0;
+                        consumption = 0;
+                    }
+                    if(measurement.length === getDaysInMonth(dailyLabels)){
+                        stepOut = true;
+                    }
                 }
-
+                //console.log(`DataToSplit: ${JSON.stringify(dataToSplit)}`);
+                //console.log(`Measurement: ${JSON.stringify(dataToSplit[50])}`);
             }
+            // for (let i = 0; i < dataArray.length;i++){
+            //     let split = dataArray[i].timestamp.split(" ");
+            //     let splitted = split[0].split("-");
+            //     let changedUsDate = changeEuDateToUSDate(currRange.innerHTML);
+            //     let splitChangeUsDate = changedUsDate.split("-");
+            //     if(splitted[1] === splitChangeUsDate[1]){
+            //         dataToSplit.push(dataArray[i]);
+            //     }
+            //     console.log(`lol ${JSON.stringify(dataToSplit)}`);
+            // }
             currentLabel.push(dailyLabels);
+            console.log(dailyLabels);
         }
     }
-
-    console.log(dataToSplit);
-    console.log(currentLabel);
-    console.log(`real Data: ${data}`);
-    console.log(HourLabels);
+    // console.log(dataToSplit);
+    // console.log(currentLabel);
+    // console.log(`real Data: ${data}`);
+    // console.log(HourLabels);
     chartSettingsContainer.display = "block";
-    const checkbox = [
-        {name: 'consumption',label: 'consumption', data:data, backgroundColor:'#ffcd56', borderColor: '#ffcd56' },
-        {name: 'generation',label: 'generation', data:data, backgroundColor: '#36a2eb', borderColor: '#36a2eb' },
-        {name: 'balance',label: 'balance', data:data,  backgroundColor: '#4bc0c0', borderColor: '#4bc0c0' },
-        {name: 'price',label:'price', data: data,  backgroundColor: '#ffcd56', borderColor: '#ffcd56' }
-    ]
-    // const checkboxes = [
-    //     { name: 'consumption', label: 'Stromverbrauch', data: [dailyDataConsumption, monthlyDataConsumption], backgroundColor: '#ffcd56', borderColor: '#ffcd56' },
-    //     { name: 'generation', label: 'Stromgewinnung', data: [dailyDataProduction, monthlyDataProduction], backgroundColor: '#36a2eb', borderColor: '#36a2eb' },
-    //     { name: 'balance', label: 'Netto-Strombilanz', data: [dailyDataNetto, monthlyDataNetto], backgroundColor: '#4bc0c0', borderColor: '#4bc0c0' },
-    //     { name: 'price', label: 'Gesamtpreis', data: [selectedInterval === 'daily' ? dailyData : monthlyDataPrice], backgroundColor: '#ffcd56', borderColor: '#ffcd56' }
-    // ];
     const drawLine = findLine(checkbox, currentLabel);
-    drawChart(data,currentLabel, checkbox);
-
-    // if(consumptionCheckbox.checked){
-    //     if(intervalInputs.)
-    // }
-    // const chartData = {
-    //     labels: selectedInterval === 'daily' ? HourLabels : selectedInterval === 'monthly' ? dailyLabels : monthLabels,
-    //     datasets: dataToSplit.map(c => ({
-    //         label: c.label,
-    //         data: c.data[selectedInterval === 'daily' ? 0 : 1],
-    //         backgroundColor: c.backgroundColor,
-    //         borderColor: c.borderColor,
-    //         fill: false
-    //     }))
-    // };
-    //
-    // const chartOptions = {
-    //     scales: {
-    //         yAxes: [{
-    //             ticks: {
-    //                 beginAtZero: true
-    //             }
-    //         }]
-    //     }
-    // };
-    //
-    // const ctx = document.getElementById('myChart').getContext('2d');
-    // const myChart = new Chart(ctx, {
-    //     type: 'line',
-    //     data: chartData,
-    //     options: chartOptions
-    // });
-
+    currentChart = drawChart(data,currentLabel, checkbox, currChart);
 }
