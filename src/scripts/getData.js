@@ -2,7 +2,6 @@ async function getDataFromAPI() {
     try {
         const response = await fetch('https://ems-syp.000webhostapp.com/api/index.php');
         const data = await response.json();
-        console.log("Scheiß ausgabe:", data);
 
         let dataArray = Array.isArray(data) ? data : [data];
 
@@ -21,7 +20,6 @@ async function getDataFromAPI() {
     }
 }
 function convertDateTime(inputDateTime) {
-    //console.log(inputDateTime);
     const dateParts = inputDateTime.split(" ")[0].split("-");
     const timeParts = inputDateTime.split(" ")[1].split(":");
     const day = dateParts[2];

@@ -76,7 +76,7 @@
           </div>
       </div>
 	<script>
-		(async () => {	
+		(async () => {
 			let settings = await getSettings();
 
 			for(let i = 0; i < settings.length; i++){
@@ -85,7 +85,7 @@
                 //console.log(settings[i].value);
 			}
 		})();
-		
+
 		function getHome(){
 			if (event.target.id === "settingsButton") {
 				location.href = "./index.html";

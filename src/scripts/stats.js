@@ -1,20 +1,24 @@
 function drawChart(data, label, checkbox, currentChart){
     console.log("Drawing chart with Data: ", data);
     console.log("Drawing chart with Labels: ", label);
+    let chartData2;
 
     //const selectedCheckboxes = data.filter(c => document.getElementById(c.type).checked); //TODO: Repair Code
     //const selectedCheckboxes = data.filter(c => c.type === "consumption");
 
     const selectCheckbox = checkbox.filter(c => document.getElementById(c.name).checked);
-    let chartData = {
+    console.log("SelectedCheckbox:",selectCheckbox);
+    data.push(eval(selectCheckbox[0].name));
+    let chartData1 = {
         type: "line",
         labels:label,
         datasets: [{
+            label: selectCheckbox[0].name,
             data:data,
-            backgroundColor:selectCheckbox.backgroundColor,
-            borderColor:selectCheckbox.borderColor,
+            backgroundColor:selectCheckbox[0].backgroundColor,
+            borderColor:selectCheckbox[0].borderColor,
+            fill:false
         }],
-        fill:false
     }
     console.log(currentChart);
     console.log(currentChart);
@@ -25,9 +29,16 @@ function drawChart(data, label, checkbox, currentChart){
             currentChart.destroy();
         }
         // Erstelle das Diagramm
-         let myChart = new Chart(ctx, {
+        let myChart = new Chart(ctx, {
             type: 'line',
-            data: chartData,
+            data: chartData1,
+        },{
+            options: {
+                title: {
+                    display: true,
+                    text: selectCheckbox.name
+                }
+            }
         });
         if(myChart !== undefined){
             document.getElementById('loadingChart').style.display = "none";

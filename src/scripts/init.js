@@ -19,10 +19,6 @@ function getCurrentDate() {
 async function init(){
     let settings = await getSettings();
     getWeatherData(settings[3].value);
-    let demodata = [0,0,0,0,0,0,0,0,0,0];
-    //drawChart(demodata, demodata);
-    //document.getElementById("loadingChart").style.display = "none"; //Loading Circle
-    // drawChart()
     document.getElementById('currRange').innerHTML = getCurrentDate(); //Um das aktuelle Datum statt dem 01.01 anzuzeigen im Auswahlmenü des Charts
     getDataFromAPI().then(function(dataResult) {
         console.log(dataResult);
@@ -37,9 +33,5 @@ async function init(){
 
         console.log("Data:", Data);
         console.log("Labels:", labels);
-        // drawChart(Data, labels);
     });
-    // Date date = new Date();
-    // let currentMonth = date.getMonth() + 1;
-    // drawChart();
 }

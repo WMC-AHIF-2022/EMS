@@ -6,6 +6,9 @@ const currRange = document.getElementById("currRange");
 const chartSettingsContainer = document.getElementById("chartSettingsContainer");
 const year = new Date().getFullYear();
 let dailyLabels = [];
+const yearlyLabels = Array.from({
+    length: 12
+}, (_, i) => (i + 1).toString());
 let currentChart = undefined;
 for (let i = 1; i <= 31; i++) {
     dailyLabels.push(i);
@@ -25,7 +28,7 @@ function changeDate(dateStr, delta) {
     //return `${date.getDate()}.${("0" + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()}`;
 }
 function changeEuDateToUSDate(datum) {
-    console.log(datum);
+    // console.log(datum);
     const parts = datum.split(".");
     console.log(parts);
     return `${parts[2]}-${parts[1].padStart(2, "0")}-${parts[0].padStart(2, "0")}`;
@@ -122,7 +125,6 @@ function getCurrentMonthGerman() {
 
     return germanMonth;
 }
-
 // Attach change event listener to interval inputs
 intervalInputs.forEach(input => {
     input.addEventListener('change', function(event) {
@@ -139,20 +141,45 @@ intervalInputs.forEach(input => {
         drawDiagram();
     });
 });
-// function removeElementFromArray(array, index) {
-//     const newArray = [...array.slice(0, index), ...array.slice(index + 1)];
-//     return newArray;
-function findLine(checkboxes, currentLabel) {
-    for (let i = 0; i < checkboxes.length;i++){
-        if(currentLabel === checkboxes[i].label){
-            return checkboxes[i];
-        }
+
+function findRightData(data,consumption, generation, measurement) {
+    if(consumptionCheckbox.checked && consumption !== 0){
+        data.push(consumption);
     }
-    return undefined;
+    else if(generationCheckbox.checked && generation !== 0){
+        data.push(generation);
+    }
+    else {
+        measurement = generation - consumption;
+        data.push(measurement);
+    }
 }
-// }
+
+function findDay() {
+    const split = currRange.innerHTML.split(".");
+    let num = parseInt(split[1], 10);
+    console.log(num);
+    if(num > 1){
+        num = num * 95;
+    }
+    return num;
+}
+
+function findMonth() {
+    const monthStr = currRange.innerHTML;
+    let index = monthLabels.indexOf(monthStr) + 1;
+    console.log(index);
+    if(index > 1){
+        index = index * ((95 * getDaysInMonth(monthStr[index]))-1);
+    }
+    return index;
+}
 async function drawDiagram() {
+    const day = (4*HourLabels)-1;
+    const month = (day * dailyLabels)-1;
+    const year = month*12;
     let dataArray = await getDataFromAPI();
+    console.log("dataArray", dataArray);
     let dataToSplit = [];
     let data = [];
     let currentLabel = [];
@@ -166,92 +193,91 @@ async function drawDiagram() {
     ]
     let currChart = drawChart(demodata, HourLabels.slice(), checkbox, currentChart);
     // console.log(intervalInputs);
-    // console.log(selectedInterval);
-
-    if(consumptionCheckbox.checked){
-        if(selectedInterval === 'daily'){
-            for (let i = 0; i < dataArray.length -1;i++){
-                let split = dataArray[i].timestamp.split(" ");
-                console.log(currRange.innerHTML);
-                if(split[0] === changeEuDateToUSDate(currRange.innerHTML)){
-                    dataToSplit.push(dataArray[i]);
-                }
-                 //console.log(`DataToSplit: ${JSON.stringify(dataToSplit)}`);
-                //console.log(`Measurement: ${JSON.stringify(dataToSplit[50])}`);
-            }
-            for (let x = 1; x < dataToSplit.length && !stepOut;x++){
-                let consumption = 0;
-                let generation = 0;
-                let measurement = 0;
-                // console.log(`lol ${JSON.stringify(dataToSplit[x])}`);
-                if(dataToSplit[x].type === 'consumption'){
-                    consumption += dataToSplit[x].measurement;
-                }
-                else {
-                    generation +=  dataToSplit[x].measurement;
-                }
-                if(x % 4 === 0){
-                    measurement = generation - consumption;
-                    data.push(measurement);
-                    measurement = 0;
-                    generation = 0;
-                    consumption = 0;
-                }
-                if(measurement.length === 24){
-                    stepOut = true;
-                }
-            }
-            currentLabel = HourLabels.slice();
-            console.log(currentLabel);
-        }
-        else if(selectedInterval === 'monthly'){
-            for (let i = 0; i < dataArray.length -1;i++){
-                let split = dataArray[i].timestamp.split(" ");
+    console.log("selectedInterval:",selectedInterval.value);
+    if(selectedInterval === 'daily' || selectedInterval.value === 'daily'){
+        for (let i = 0; i < dataArray.length -1;i++){
+            let split = dataArray[i].timestamp.split(" ");
+            if(split[0] === changeEuDateToUSDate(currRange.innerHTML)){
                 dataToSplit.push(dataArray[i]);
-                for (let x = 1; x < dataToSplit.length && !stepOut;x++){
-                    let consumption = 0;
-                    let generation = 0;
-                    let measurement = 0;
-                    // console.log(`lol ${JSON.stringify(dataToSplit[x])}`);
-                    if(dataToSplit[x].type === 'consumption'){
-                        consumption += dataToSplit[x].measurement;
-                    }
-                    else {
-                        generation +=  dataToSplit[x].measurement;
-                    }
-                    if(x % 95 === 0){
-                        measurement = generation - consumption;
-                        data.push(measurement);
-                        measurement = 0;
-                        generation = 0;
-                        consumption = 0;
-                    }
-                    if(measurement.length === getDaysInMonth(dailyLabels)){
-                        stepOut = true;
-                    }
-                }
-                //console.log(`DataToSplit: ${JSON.stringify(dataToSplit)}`);
-                //console.log(`Measurement: ${JSON.stringify(dataToSplit[50])}`);
             }
-            // for (let i = 0; i < dataArray.length;i++){
-            //     let split = dataArray[i].timestamp.split(" ");
-            //     let splitted = split[0].split("-");
-            //     let changedUsDate = changeEuDateToUSDate(currRange.innerHTML);
-            //     let splitChangeUsDate = changedUsDate.split("-");
-            //     if(splitted[1] === splitChangeUsDate[1]){
-            //         dataToSplit.push(dataArray[i]);
-            //     }
-            //     console.log(`lol ${JSON.stringify(dataToSplit)}`);
-            // }
-            currentLabel.push(dailyLabels);
-            console.log(dailyLabels);
         }
+        let factorDays = findDay();
+        console.log(factorDays);
+        for (let x = factorDays; x < dataToSplit.length && !stepOut;x++){
+            let consumption = 0;
+            let generation = 0;
+            let measurement = 0;
+            if(dataToSplit[x].type === 'consumption'){
+                consumption += dataToSplit[x].measurement;
+            }
+            else {
+                generation +=  dataToSplit[x].measurement;
+            }
+            if(x % 4 === 0){
+                findRightData(data,consumption,generation, measurement);
+            }
+            if(x === day){//95 == Ein tag
+                stepOut = true;
+            }
+        }
+        currentLabel = HourLabels.slice();
+        console.log(currentLabel);
+    }
+    else if(selectedInterval === 'monthly' || selectedInterval.value === 'monthly'){
+        let factorMonth = findMonth();
+        console.log("factorMonth:",factorMonth);
+        for (let x = factorMonth; x < dataArray.length && !stepOut;x++){
+            let consumption = 0;
+            let generation = 0;
+            let measurement = 0;
+
+            if(dataArray[x].type === 'consumption'){
+                consumption += dataArray[x].measurement;
+            }
+            else {
+                generation +=  dataArray[x].measurement;
+            }
+            if(x % 95 === 0){ // ein Tag
+                findRightData(data,consumption, generation, measurement);
+            }
+            if(x === month){
+                stepOut = true;
+            }
+        }
+        currentLabel = dailyLabels.slice();
+        console.log("DailyLabel:",dailyLabels);
+    }
+    else if(selectedInterval === 'yearly'){
+        let countMonth = 0;
+        console.log("data:", dataArray);
+        for (let x = 1; x < dataArray.length && !stepOut;x++){
+            let consumption = 0;
+            let generation = 0;
+            let measurement = 0;
+
+            if(dataArray[x].type === 'consumption'){
+                consumption += dataArray[x].measurement;
+            }
+            else {
+                generation +=  dataArray[x].measurement;
+            }
+            if(x % (95 * getDaysInMonth(monthLabels[countMonth])) === 0){
+                findRightData(data,consumption, generation, measurement);
+                countMonth++;
+
+            }
+            if(x === year){
+                stepOut = true;
+            }
+        }
+        currentLabel = yearlyLabels.slice();
+        console.log("DailyLabel:",dailyLabels);
     }
     // console.log(dataToSplit);
     // console.log(currentLabel);
     // console.log(`real Data: ${data}`);
     // console.log(HourLabels);
     chartSettingsContainer.display = "block";
-    const drawLine = findLine(checkbox, currentLabel);
+    // const drawLine = findLine(checkbox, currentLabel);
     currentChart = drawChart(data,currentLabel, checkbox, currChart);
 }
