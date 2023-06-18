@@ -11,8 +11,9 @@ async function sendSettings() {
   const currency = document.getElementById("currency").value;
   const defaultStats = document.getElementById("defaultStats").value;
   const homeCity = document.getElementById("homeCity").value;
+  const pricePerKwh = document.getElementById("pricePerKwh").value;
 
-  const url = `https://ems-syp.000webhostapp.com/api/setSettings.php?unitOfElectricity=${unitOfElectricity}&currency=${currency}&defaultStats=${defaultStats}&homeCity=${homeCity}`;
+  const url = `https://ems-syp.000webhostapp.com/api/setSettings.php?unitOfElectricity=${unitOfElectricity}&currency=${currency}&pricePerKwh=${pricePerKwh}&defaultStats=${defaultStats}&homeCity=${homeCity}`;
 
   try {
     const response = await fetch(url);
