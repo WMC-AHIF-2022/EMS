@@ -2,6 +2,7 @@ async function getDataFromAPI() {
     try {
         const response = await fetch('https://ems-syp.000webhostapp.com/api/index.php');
         const data = await response.json();
+        console.log("Daten:", data);
 
         let dataArray = Array.isArray(data) ? data : [data];
 

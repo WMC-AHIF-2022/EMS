@@ -5,6 +5,7 @@ const priceCheckbox = document.getElementById("price");
 const currRange = document.getElementById("currRange");
 const chartSettingsContainer = document.getElementById("chartSettingsContainer");
 const year = new Date().getFullYear();
+let pricePerKw = document.getElementById("pricePerKwh");
 let dailyLabels = [];
 const yearlyLabels = Array.from({
     length: 12
@@ -28,9 +29,7 @@ function changeDate(dateStr, delta) {
     //return `${date.getDate()}.${("0" + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()}`;
 }
 function changeEuDateToUSDate(datum) {
-    // console.log(datum);
     const parts = datum.split(".");
-    console.log(parts);
     return `${parts[2]}-${parts[1].padStart(2, "0")}-${parts[0].padStart(2, "0")}`;
 }
 
@@ -95,36 +94,6 @@ balanceCheckbox.addEventListener("change", function() {
     handleCheckboxChange(balanceCheckbox, [priceCheckbox]);
 });
 
-function getCurrentDate() {
-    var date = new Date();
-    var day = date.getDate();
-    var month = date.getMonth() + 1; // Monate im Date-Objekt sind nullbasiert, daher +1
-    var year = date.getFullYear();
-
-    // Führende Nullen hinzufügen, falls Tag oder Monat einstellig sind
-    if (day < 10) {
-        day = '0' + day;
-    }
-    if (month < 10) {
-        month = '0' + month;
-    }
-
-    var formattedDate = day + '.' + month + '.' + year;
-    return formattedDate;
-}
-
-function getCurrentMonthGerman() {
-    var months = [
-        'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
-        'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'
-    ];
-
-    var date = new Date();
-    var monthIndex = date.getMonth();
-    var germanMonth = months[monthIndex];
-
-    return germanMonth;
-}
 // Attach change event listener to interval inputs
 intervalInputs.forEach(input => {
     input.addEventListener('change', function(event) {
@@ -132,26 +101,31 @@ intervalInputs.forEach(input => {
         selectedInterval = selectedIntervalTwo;
 
         if (selectedIntervalTwo === "monthly") {
-            currRange.innerHTML = getCurrentMonthGerman();
+            currRange.innerHTML = "Januar";
         } else if (selectedIntervalTwo === "yearly") {
             currRange.innerHTML = year;
         } else {
-            currRange.innerHTML = getCurrentDate();
+            currRange.innerHTML = `01.01.${year}`;
         }
         drawDiagram();
     });
 });
-
 function findRightData(data,consumption, generation, measurement) {
+    let price = 0;
     if(consumptionCheckbox.checked && consumption !== 0){
         data.push(consumption);
     }
     else if(generationCheckbox.checked && generation !== 0){
         data.push(generation);
     }
-    else {
+    else if(balanceCheckbox.checked && measurement !== 0){
         measurement = generation - consumption;
         data.push(measurement);
+    }
+    else{
+        console.log(pricePerKw.innerHTML);
+        price = measurement * parseFloat(pricePerKw.innerHTML);
+        data.push(price);
     }
 }
 
@@ -170,8 +144,9 @@ function findMonth() {
     let index = monthLabels.indexOf(monthStr) + 1;
     console.log(index);
     if(index > 1){
-        index = index * ((95 * getDaysInMonth(monthStr[index]))-1);
+        index = index * ((95 * getDaysInMonth(index))-1);
     }
+    console.log("Monthright",index);
     return index;
 }
 async function drawDiagram() {
@@ -192,7 +167,6 @@ async function drawDiagram() {
         {name: 'price',label:'price', data: data,  backgroundColor: '#ffcd56', borderColor: '#ffcd56' }
     ]
     let currChart = drawChart(demodata, HourLabels.slice(), checkbox, currentChart);
-    // console.log(intervalInputs);
     console.log("selectedInterval:",selectedInterval.value);
     if(selectedInterval === 'daily' || selectedInterval.value === 'daily'){
         for (let i = 0; i < dataArray.length -1;i++){
