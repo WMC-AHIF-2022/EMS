@@ -5,7 +5,7 @@ const priceCheckbox = document.getElementById("price");
 const currRange = document.getElementById("currRange");
 const chartSettingsContainer = document.getElementById("chartSettingsContainer");
 const year = new Date().getFullYear();
-let pricePerKw = document.getElementById("pricePerKwh");
+// let pricePerKw = document.getElementById("pricePerKwh");
 let dailyLabels = [];
 const yearlyLabels = Array.from({
     length: 12
@@ -118,15 +118,15 @@ function findRightData(data,consumption, generation, measurement) {
     else if(generationCheckbox.checked && generation !== 0){
         data.push(generation);
     }
-    else if(balanceCheckbox.checked && measurement !== 0){
+    else {
         measurement = generation - consumption;
         data.push(measurement);
     }
-    else{
-        console.log(pricePerKw.innerHTML);
-        price = measurement * parseFloat(pricePerKw.innerHTML);
-        data.push(price);
-    }
+    // else{
+    //     console.log(pricePerKw.innerHTML);
+    //     price = measurement * parseFloat(pricePerKw.innerHTML);
+    //     data.push(price);
+    // }
 }
 
 function findDay() {
