@@ -1,9 +1,13 @@
 async function getSettings(){
-  const url = `https://ems-syp.000webhostapp.com/api/getSettings.php`;
-  const response = await fetch(url);
-  const data = await response.json();
-  console.log("SettingsJSON: ", data);
-  return data;
+  try{
+      const url = `https://tauwisbackup.de/EMS/api/getSettings.php`;
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log("SettingsJSON: ", data);
+      return data;
+  } catch (error) {
+        console.error('Fehler beim Abrufen der Einstellungen:', error);
+    }
 }
 
 async function sendSettings() {
@@ -13,7 +17,7 @@ async function sendSettings() {
   const homeCity = document.getElementById("homeCity").value;
   const pricePerKwh = document.getElementById("pricePerKwh").value;
 
-  const url = `https://ems-syp.000webhostapp.com/api/setSettings.php?unitOfElectricity=${unitOfElectricity}&currency=${currency}&pricePerKwh=${pricePerKwh}&defaultStats=${defaultStats}&homeCity=${homeCity}`;
+  const url = `https://tauwisbackup.de/EMS/api/setSettings.php?unitOfElectricity=${unitOfElectricity}&currency=${currency}&pricePerKwh=${pricePerKwh}&defaultStats=${defaultStats}&homeCity=${homeCity}`;
 
   try {
     const response = await fetch(url);

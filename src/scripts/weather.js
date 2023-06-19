@@ -19,7 +19,8 @@ function formatString(string) {
 }
 
 async function getWeatherData(city) {
-    const url = "https://ems-syp.000webhostapp.com/api/weather.php?city="+city;
+    console.log("Weather loading!");
+    const url = "https://tauwisbackup.de/EMS/api/weather.php?city="+city;
     const response = await fetch(url);
     const data = await response.json();
     const weatherData = data.forecast.forecastday;
@@ -36,4 +37,5 @@ async function getWeatherData(city) {
         string += Math.round(forecast.day.daily_chance_of_rain)+"% Regen | "+Math.round(forecast.day.avghumidity)+"% Luftfeuchtigkeit</p></div>";
         document.getElementById('weatherForecast').innerHTML += string;
     }
+    console.log("Weather loaded!");
 }

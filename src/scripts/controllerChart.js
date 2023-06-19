@@ -150,108 +150,114 @@ function findMonth() {
     return index;
 }
 async function drawDiagram() {
-    const day = (4*HourLabels)-1;
-    const month = (day * dailyLabels)-1;
-    const year = month*12;
-    let dataArray = await getDataFromAPI();
-    console.log("dataArray", dataArray);
-    let dataToSplit = [];
-    let data = [];
-    let currentLabel = [];
-    let stepOut = false;
-    let demodata = [0,0,0,0,0,0,0,0,0,0];
-    const checkbox = [
-        {name: 'consumption',label: 'consumption', data:data, backgroundColor:'#ffffff', borderColor: '#ffcd56' },
-        {name: 'generation',label: 'generation', data:data, backgroundColor: '#36a2eb', borderColor: '#36a2eb' },
-        {name: 'balance',label: 'balance', data:data,  backgroundColor: '#4bc0c0', borderColor: '#4bc0c0' },
-        {name: 'price',label:'price', data: data,  backgroundColor: '#ffcd56', borderColor: '#ffcd56' }
-    ]
-    let currChart = drawChart(demodata, HourLabels.slice(), checkbox, currentChart);
-    console.log("selectedInterval:",selectedInterval.value);
-    if(selectedInterval === 'daily' || selectedInterval.value === 'daily'){
-        for (let i = 0; i < dataArray.length -1;i++){
-            let split = dataArray[i].timestamp.split(" ");
-            if(split[0] === changeEuDateToUSDate(currRange.innerHTML)){
-                dataToSplit.push(dataArray[i]);
+    console.log("Starting drawDiagramm...");
+    try{
+        const day = (4*HourLabels)-1;
+        const month = (day * dailyLabels)-1;
+        const year = month*12;
+        let dataArray = await getDataFromAPI();
+        console.log("dataArray", dataArray);
+        let dataToSplit = [];
+        let data = [];
+        let currentLabel = [];
+        let stepOut = false;
+        let demodata = [0,0,0,0,0,0,0,0,0,0];
+        const checkbox = [
+            {name: 'consumption',label: 'consumption', data:data, backgroundColor:'#ffffff', borderColor: '#ffcd56' },
+            {name: 'generation',label: 'generation', data:data, backgroundColor: '#36a2eb', borderColor: '#36a2eb' },
+            {name: 'balance',label: 'balance', data:data,  backgroundColor: '#4bc0c0', borderColor: '#4bc0c0' },
+            {name: 'price',label:'price', data: data,  backgroundColor: '#ffcd56', borderColor: '#ffcd56' }
+        ]
+        let currChart = drawChart(demodata, HourLabels.slice(), checkbox, currentChart);
+        console.log("selectedInterval:",selectedInterval.value);
+        if(selectedInterval === 'daily' || selectedInterval.value === 'daily'){
+            for (let i = 0; i < dataArray.length -1;i++){
+                let split = dataArray[i].timestamp.split(" ");
+                if(split[0] === changeEuDateToUSDate(currRange.innerHTML)){
+                    dataToSplit.push(dataArray[i]);
+                }
             }
+            let factorDays = findDay();
+            console.log(factorDays);
+            for (let x = factorDays; x < dataToSplit.length && !stepOut;x++){
+                let consumption = 0;
+                let generation = 0;
+                let measurement = 0;
+                if(dataToSplit[x].type === 'consumption'){
+                    consumption += dataToSplit[x].measurement;
+                }
+                else {
+                    generation +=  dataToSplit[x].measurement;
+                }
+                if(x % 4 === 0){
+                    findRightData(data,consumption,generation, measurement);
+                }
+                if(x === day){//95 == Ein tag
+                    stepOut = true;
+                }
+            }
+            currentLabel = HourLabels.slice();
+            console.log(currentLabel);
         }
-        let factorDays = findDay();
-        console.log(factorDays);
-        for (let x = factorDays; x < dataToSplit.length && !stepOut;x++){
-            let consumption = 0;
-            let generation = 0;
-            let measurement = 0;
-            if(dataToSplit[x].type === 'consumption'){
-                consumption += dataToSplit[x].measurement;
-            }
-            else {
-                generation +=  dataToSplit[x].measurement;
-            }
-            if(x % 4 === 0){
-                findRightData(data,consumption,generation, measurement);
-            }
-            if(x === day){//95 == Ein tag
-                stepOut = true;
-            }
-        }
-        currentLabel = HourLabels.slice();
-        console.log(currentLabel);
-    }
-    else if(selectedInterval === 'monthly' || selectedInterval.value === 'monthly'){
-        let factorMonth = findMonth();
-        console.log("factorMonth:",factorMonth);
-        for (let x = factorMonth; x < dataArray.length && !stepOut;x++){
-            let consumption = 0;
-            let generation = 0;
-            let measurement = 0;
+        else if(selectedInterval === 'monthly' || selectedInterval.value === 'monthly'){
+            let factorMonth = findMonth();
+            console.log("factorMonth:",factorMonth);
+            for (let x = factorMonth; x < dataArray.length && !stepOut;x++){
+                let consumption = 0;
+                let generation = 0;
+                let measurement = 0;
 
-            if(dataArray[x].type === 'consumption'){
-                consumption += dataArray[x].measurement;
+                if(dataArray[x].type === 'consumption'){
+                    consumption += dataArray[x].measurement;
+                }
+                else {
+                    generation +=  dataArray[x].measurement;
+                }
+                if(x % 95 === 0){ // ein Tag
+                    findRightData(data,consumption, generation, measurement);
+                }
+                if(x === month){
+                    stepOut = true;
+                }
             }
-            else {
-                generation +=  dataArray[x].measurement;
-            }
-            if(x % 95 === 0){ // ein Tag
-                findRightData(data,consumption, generation, measurement);
-            }
-            if(x === month){
-                stepOut = true;
-            }
+            currentLabel = dailyLabels.slice();
+            console.log("DailyLabel:",dailyLabels);
         }
-        currentLabel = dailyLabels.slice();
-        console.log("DailyLabel:",dailyLabels);
-    }
-    else if(selectedInterval === 'yearly'){
-        let countMonth = 0;
-        console.log("data:", dataArray);
-        for (let x = 1; x < dataArray.length && !stepOut;x++){
-            let consumption = 0;
-            let generation = 0;
-            let measurement = 0;
+        else if(selectedInterval === 'yearly'){
+            let countMonth = 0;
+            console.log("data:", dataArray);
+            for (let x = 1; x < dataArray.length && !stepOut;x++){
+                let consumption = 0;
+                let generation = 0;
+                let measurement = 0;
 
-            if(dataArray[x].type === 'consumption'){
-                consumption += dataArray[x].measurement;
-            }
-            else {
-                generation +=  dataArray[x].measurement;
-            }
-            if(x % (95 * getDaysInMonth(monthLabels[countMonth])) === 0){
-                findRightData(data,consumption, generation, measurement);
-                countMonth++;
+                if(dataArray[x].type === 'consumption'){
+                    consumption += dataArray[x].measurement;
+                }
+                else {
+                    generation +=  dataArray[x].measurement;
+                }
+                if(x % (95 * getDaysInMonth(monthLabels[countMonth])) === 0){
+                    findRightData(data,consumption, generation, measurement);
+                    countMonth++;
 
+                }
+                if(x === year){
+                    stepOut = true;
+                }
             }
-            if(x === year){
-                stepOut = true;
-            }
+            currentLabel = yearlyLabels.slice();
+            console.log("DailyLabel:",dailyLabels);
         }
-        currentLabel = yearlyLabels.slice();
-        console.log("DailyLabel:",dailyLabels);
+        // console.log(dataToSplit);
+        // console.log(currentLabel);
+        // console.log(`real Data: ${data}`);
+        // console.log(HourLabels);
+        chartSettingsContainer.display = "block";
+    }catch(exception){
+        console.log("Error drawing Diagram: ", exception);
     }
-    // console.log(dataToSplit);
-    // console.log(currentLabel);
-    // console.log(`real Data: ${data}`);
-    // console.log(HourLabels);
-    chartSettingsContainer.display = "block";
+    console.log("drawDiagramm finished");
     // const drawLine = findLine(checkbox, currentLabel);
     currentChart = drawChart(data,currentLabel, checkbox, currChart);
 }
