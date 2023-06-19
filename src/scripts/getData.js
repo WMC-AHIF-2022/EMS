@@ -9,7 +9,6 @@ async function getDataFromAPI() {
         const response = await fetch('https://tauwisbackup.de/EMS/api/index.php');
         const data = await response.json();
         console.log("Daten:", data);
-        document.getElementById("loadingVal").innerHTML = "10%";
         let dataArray = Array.isArray(data) ? data : [data];
         
         let loadingCount = 0;
