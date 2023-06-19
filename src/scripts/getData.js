@@ -12,12 +12,16 @@ async function getDataFromAPI() {
         let dataArray = Array.isArray(data) ? data : [data];
         
         let loadingCount = 0;
+        let oldPercent = 0;
         for (let i = 0; i < dataArray.length; i++) {
             //console.log("Loading Dataset: "+i+"/"+(dataArray.length-1));
-            if(loadingCount = 500){
+            if(loadingCount = 5000){
                 let loadingPercentage = Math.round(calcLoadingPercentage(dataArray.length, i))+"%";
-                console.log(loadingPercentage);
-                //document.getElementById("loadingVal").innerHTML = loadingPercentage;
+                if(oldPercent != loadingPercentage){
+                    console.log(loadingPercentage);
+                    document.getElementById('loadingVal').innerHTML = loadingPercentage;
+                }
+                oldPercent = loadingPercentage;
                 loadingCount = 0;
             }
             loadingCount++;
