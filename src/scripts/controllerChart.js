@@ -143,18 +143,30 @@ function findMonth() {
     const monthStr = currRange.innerHTML;
     let index = monthLabels.indexOf(monthStr) + 1;
     console.log(index);
-    if(index > 1){
-        index = index * ((95 * getDaysInMonth(index))-1);
-    }
     console.log("Monthright",index);
     return index;
 }
+
+function findYear() {
+    let index = 1;
+    const yearRange = parseInt(currRange.innerHTML);
+    if(year === yearRange){
+        return index;
+    }
+    else {
+        return index * 365;
+    }
+}
+
 async function drawDiagram() {
     console.log("Starting drawDiagramm...");
     try{
         const day = (4*HourLabels)-1;
+        console.log("Tag:",day);
         const month = (day * dailyLabels)-1;
+        console.log("Monat:", month);
         const year = month*12;
+        console.log("Year: ",year);
         let dataArray = await getDataFromAPI();
         console.log("dataArray", dataArray);
         let dataToSplit = [];
@@ -193,7 +205,7 @@ async function drawDiagram() {
                     findRightData(data,consumption,generation, measurement);
                     console.log("Es geht in die If");
                 }
-                if(x === day){//95 == Ein tag
+                if(x === 95){//95 == Ein tag
                     stepOut = true;
                 }
             }
@@ -202,6 +214,9 @@ async function drawDiagram() {
         }
         else if(selectedInterval === 'monthly' || selectedInterval.value === 'monthly'){
             let factorMonth = findMonth();
+            if(factorMonth > 1){
+                factorMonth = factorMonth * ((95 * getDaysInMonth(factorMonth))-1);
+            }
             console.log("factorMonth:",factorMonth);
             for (let x = factorMonth; x < dataArray.length && !stepOut;x++){
                 let consumption = 0;
@@ -225,22 +240,26 @@ async function drawDiagram() {
             console.log("DailyLabel:",dailyLabels);
         }
         else if(selectedInterval === 'yearly' || selectedInterval.value === 'yearly'){
-            let indexMonth = 0;
+            let indexMonth = 1;
+            let count = 0;
+            let factorYear = findYear();
             console.log("data:", dataArray);
-            for (let x = 1; x < dataArray.length && !stepOut;x++){
+            for (let x = factorYear; x < dataArray.length && !stepOut;x++){
                 let consumption = 0;
                 let generation = 0;
                 let measurement = 0;
-
+                count++;
                 if(dataArray[x].type === 'consumption'){
                     consumption += dataArray[x].measurement;
                 }
                 else {
                     generation +=  dataArray[x].measurement;
                 }
-                if(x % (95 * getDaysInMonth(indexMonth) === 0)){
+                if(count ===(95 * getDaysInMonth(indexMonth))){
                     findRightData(data,consumption, generation, measurement);
                     indexMonth++;
+                    count = 0;
+                    console.log(data);
                     console.log("Index von X:",x);
                 }
                 if(x === year){
