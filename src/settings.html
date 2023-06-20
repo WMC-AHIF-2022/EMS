@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache"/>
     <title>EMS - Energy Management System</title>
     <link rel="stylesheet" type="text/css" href="./styles/hoverBox.css">
     <link rel="stylesheet" type="text/css" href="./styles/main.css">
@@ -41,8 +42,9 @@
     </div>
 </div>
 <div id="StatsChart">
-    <div id="loadingChart" style="z-index: 9999; margin-left: 100%;">
+    <div id="loadingChart"  class="loadingSpinnerMain" style="z-index: 9999; margin-left: 100%;">
         <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+        <span id="loadingVal">0%</span>
     </div>
     <canvas id="myChart"></canvas>
 </div>
