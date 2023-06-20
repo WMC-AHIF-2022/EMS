@@ -1,13 +1,13 @@
 function drawChart(data, label, checkbox, currentChart){
-    console.log("Drawing chart with Data: ", data);
-    console.log("Drawing chart with Labels: ", label);
+    //console.log("Drawing chart with Data: ", data);
+    //console.log("Drawing chart with Labels: ", label);
     let chartData2;
 
     //const selectedCheckboxes = data.filter(c => document.getElementById(c.type).checked); //TODO: Repair Code
     //const selectedCheckboxes = data.filter(c => c.type === "consumption");
 
     const selectCheckbox = checkbox.filter(c => document.getElementById(c.name).checked);
-    console.log("SelectedCheckbox:",selectCheckbox);
+    //console.log("SelectedCheckbox:",selectCheckbox);
     data.push(eval(selectCheckbox[0].name));
     let chartData1 = {
         type: "line",
@@ -20,8 +20,8 @@ function drawChart(data, label, checkbox, currentChart){
             fill:false
         }],
     }
-    console.log(currentChart);
-    console.log(currentChart);
+    //console.log(currentChart);
+    //console.log(currentChart);
     let canvas = document.getElementById('myChart');
     if (canvas) {
         let ctx = canvas.getContext('2d');

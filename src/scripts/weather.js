@@ -19,7 +19,7 @@ function formatString(string) {
 }
 
 async function getWeatherData(city) {
-    console.log("Weather loading!");
+    console.log("Weather loading...");
     const url = "https://tauwisbackup.de/EMS/api/weather.php?city="+city;
     const response = await fetch(url);
     const data = await response.json();

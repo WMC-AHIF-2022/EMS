@@ -17,7 +17,7 @@ for (let i = 1; i <= 31; i++) {
 const HourLabels = Array.from({
     length: 24
 }, (_, i) => (i + 1).toString());
-console.log(HourLabels);
+//console.log(HourLabels);
 const monthLabels = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
 let selectedInterval = document.querySelector('input[name="interval"]:checked');
 const intervalInputs = document.querySelectorAll('input[name="interval"]');
@@ -62,7 +62,7 @@ function change(action) {
 
     selectedInterval = document.querySelector('input[name="interval"]:checked');
     const selectedIntervalFn = intervalFns[selectedInterval.value];
-    //console.log(selectedInterval.value)
+    console.log("sel Intervall", selectedInterval.value)
     //console.log(selectedIntervalFn);
     if (selectedIntervalFn) {
         selectedIntervalFn();
@@ -132,7 +132,7 @@ function findRightData(data,consumption, generation, measurement) {
 function findDay() {
     const split = currRange.innerHTML.split(".");
     let num = parseInt(split[1], 10);
-    console.log(num);
+    //console.log(num);
     if(num > 1){
         num = num * 95;
     }
@@ -142,8 +142,8 @@ function findDay() {
 function findMonth() {
     const monthStr = currRange.innerHTML;
     let index = monthLabels.indexOf(monthStr) + 1;
-    console.log(index);
-    console.log("Monthright",index);
+    //console.log(index);
+    //console.log("Monthright",index);
     return index;
 }
 
@@ -162,13 +162,13 @@ async function drawDiagram() {
     console.log("Starting drawDiagramm...");
     try{
         const day = (4*HourLabels)-1;
-        console.log("Tag:",day);
+        //console.log("Tag:",day);
         const month = (day * dailyLabels)-1;
-        console.log("Monat:", month);
+        //console.log("Monat:", month);
         const year = month*12;
-        console.log("Year: ",year);
+        //console.log("Year: ",year);
         let dataArray = await getDataFromAPI();
-        console.log("dataArray", dataArray);
+        //console.log("dataArray", dataArray);
         let dataToSplit = [];
         let data = [];
         let currentLabel = [];
@@ -181,7 +181,7 @@ async function drawDiagram() {
             {name: 'price',label:'price', data: data,  backgroundColor: '#ffcd56', borderColor: '#ffcd56' }
         ]
         let currChart = drawChart(demodata, HourLabels.slice(), checkbox, currentChart);
-        console.log("selectedInterval:",selectedInterval.value);
+        //console.log("selectedInterval:",selectedInterval.value);
         if(selectedInterval === 'daily' || selectedInterval.value === 'daily'){
             for (let i = 0; i < dataArray.length -1;i++){
                 let split = dataArray[i].timestamp.split(" ");
@@ -190,7 +190,7 @@ async function drawDiagram() {
                 }
             }
             let factorDays = findDay();
-            console.log(factorDays);
+            //console.log(factorDays);
             for (let x = factorDays; x < dataToSplit.length && !stepOut;x++){
                 let consumption = 0;
                 let generation = 0;
@@ -203,14 +203,13 @@ async function drawDiagram() {
                 }
                 if(x % 4 === 0){
                     findRightData(data,consumption,generation, measurement);
-                    console.log("Es geht in die If");
                 }
                 if(x === 95){//95 == Ein tag
                     stepOut = true;
                 }
             }
             currentLabel = HourLabels.slice();
-            console.log(currentLabel);
+            //console.log(currentLabel);
         }
         else if(selectedInterval === 'monthly' || selectedInterval.value === 'monthly'){
             let factorMonth = findMonth();
@@ -237,7 +236,7 @@ async function drawDiagram() {
                 }
             }
             currentLabel = dailyLabels.slice();
-            console.log("DailyLabel:",dailyLabels);
+            //console.log("DailyLabel:",dailyLabels);
         }
         else if(selectedInterval === 'yearly' || selectedInterval.value === 'yearly'){
             let indexMonth = 1;
@@ -259,15 +258,16 @@ async function drawDiagram() {
                     findRightData(data,consumption, generation, measurement);
                     indexMonth++;
                     count = 0;
-                    console.log(data);
-                    console.log("Index von X:",x);
+                    //console.log(data);
+                    //console.log("Index von X:",x);
                 }
                 if(x === year){
                     stepOut = true;
                 }
             }
             currentLabel = yearlyLabels.slice();
-            console.log("DailyLabel:",dailyLabels);
+            //console.log("currentLabel", currentLabel);
+            //console.log("DailyLabel:",dailyLabels);
         }
         // console.log(dataToSplit);
         // console.log(currentLabel);

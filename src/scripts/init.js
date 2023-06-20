@@ -1,10 +1,10 @@
 async function init(){
-    console.log("Init started!");
+    console.log("Init started...");
     console.log("Loading settings!");
     let settings = await getSettings();
     console.log("Loaded settings!");
     await getWeatherData(settings[3].value);
-    console.log("Loading data!");
+    //console.log("Loading data!");
     getDataFromAPI().then(function(dataResult) {
         //console.log(dataResult);
         var Data = [];
@@ -21,6 +21,10 @@ async function init(){
 
         //console.log("Data:", Data);
         //console.log("Labels:", labels);
-        console.log("Init finished");
+        //document.getElementById('daily').checked = true;
+        //const year = new Date().getFullYear();
+        //document.getElementById('currRange').innerHTML = "01.01."+year;
+        //drawDiagram();
+        console.log("Init finished!");
     });
 }

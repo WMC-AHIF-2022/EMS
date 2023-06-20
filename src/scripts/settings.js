@@ -3,7 +3,7 @@ async function getSettings(){
       const url = `https://tauwisbackup.de/EMS/api/getSettings.php`;
       const response = await fetch(url);
       const data = await response.json();
-      console.log("SettingsJSON: ", data);
+      //console.log("SettingsJSON: ", data);
       return data;
   } catch (error) {
         console.error('Fehler beim Abrufen der Einstellungen:', error);
