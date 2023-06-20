@@ -33,9 +33,9 @@ function changeEuDateToUSDate(datum) {
     return `${parts[2]}-${parts[1].padStart(2, "0")}-${parts[0].padStart(2, "0")}`;
 }
 
-function getDaysInMonth(month) {
+function getDaysInMonth(index) {
     const daysInMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    return daysInMonths[month];
+    return daysInMonths[index];
 }
 function change(action) {
     const currRangeEl = document.getElementById("currRange");
@@ -191,6 +191,7 @@ async function drawDiagram() {
                 }
                 if(x % 4 === 0){
                     findRightData(data,consumption,generation, measurement);
+                    console.log("Es geht in die If");
                 }
                 if(x === day){//95 == Ein tag
                     stepOut = true;
@@ -223,8 +224,8 @@ async function drawDiagram() {
             currentLabel = dailyLabels.slice();
             console.log("DailyLabel:",dailyLabels);
         }
-        else if(selectedInterval === 'yearly'){
-            let countMonth = 0;
+        else if(selectedInterval === 'yearly' || selectedInterval.value === 'yearly'){
+            let indexMonth = 0;
             console.log("data:", dataArray);
             for (let x = 1; x < dataArray.length && !stepOut;x++){
                 let consumption = 0;
@@ -237,10 +238,10 @@ async function drawDiagram() {
                 else {
                     generation +=  dataArray[x].measurement;
                 }
-                if(x % (95 * getDaysInMonth(monthLabels[countMonth])) === 0){
+                if(x % (95 * getDaysInMonth(indexMonth) === 0)){
                     findRightData(data,consumption, generation, measurement);
-                    countMonth++;
-
+                    indexMonth++;
+                    console.log("Index von X:",x);
                 }
                 if(x === year){
                     stepOut = true;
@@ -254,10 +255,10 @@ async function drawDiagram() {
         // console.log(`real Data: ${data}`);
         // console.log(HourLabels);
         chartSettingsContainer.display = "block";
+        currentChart = drawChart(data,currentLabel, checkbox, currChart);
     }catch(exception){
         console.log("Error drawing Diagram: ", exception);
     }
-    console.log("drawDiagramm finished");
     // const drawLine = findLine(checkbox, currentLabel);
-    currentChart = drawChart(data,currentLabel, checkbox, currChart);
+    console.log("drawDiagramm finished");
 }

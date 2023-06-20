@@ -15,9 +15,9 @@ async function getDataFromAPI() {
         let oldPercent = 0;
         for (let i = 0; i < dataArray.length; i++) {
             //console.log("Loading Dataset: "+i+"/"+(dataArray.length-1));
-            if(loadingCount = 5000){
+            if(loadingCount === 5000){
                 let loadingPercentage = Math.round(calcLoadingPercentage(dataArray.length, i))+"%";
-                if(oldPercent != loadingPercentage){
+                if(oldPercent !== loadingPercentage){
                     console.log(loadingPercentage);
                     document.getElementById('loadingVal').innerHTML = loadingPercentage;
                 }
