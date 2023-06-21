@@ -3,9 +3,6 @@ function drawChart(data, label, checkbox, currentChart){
     //console.log("Drawing chart with Labels: ", label);
     let chartData2;
 
-    //const selectedCheckboxes = data.filter(c => document.getElementById(c.type).checked); //TODO: Repair Code
-    //const selectedCheckboxes = data.filter(c => c.type === "consumption");
-
     const selectCheckbox = checkbox.filter(c => document.getElementById(c.name).checked);
     //console.log("SelectedCheckbox:",selectCheckbox);
     data.push(eval(selectCheckbox[0].name));
@@ -20,25 +17,16 @@ function drawChart(data, label, checkbox, currentChart){
             fill:false
         }],
     }
-    //console.log(currentChart);
-    //console.log(currentChart);
     let canvas = document.getElementById('myChart');
     if (canvas) {
         let ctx = canvas.getContext('2d');
         if(currentChart !== undefined){
             currentChart.destroy();
         }
-        // Erstelle das Diagramm
+        // Erstellt das Diagramm
         let myChart = new Chart(ctx, {
             type: 'line',
             data: chartData1,
-        },{
-            options: {
-                title: {
-                    display: true,
-                    text: selectCheckbox.name
-                }
-            }
         });
         if(myChart !== undefined){
             document.getElementById('loadingChart').style.display = "none";
