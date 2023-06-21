@@ -85,15 +85,15 @@ priceCheckbox.addEventListener("change", function() {
 });
 
 consumptionCheckbox.addEventListener("change", function() {
-    handleCheckboxChange(consumptionCheckbox, [priceCheckbox]);
+    handleCheckboxChange(consumptionCheckbox, [priceCheckbox, generationCheckbox, balanceCheckbox]);
 });
 
 generationCheckbox.addEventListener("change", function() {
-    handleCheckboxChange(generationCheckbox, [priceCheckbox]);
+    handleCheckboxChange(generationCheckbox, [priceCheckbox,consumptionCheckbox,balanceCheckbox]);
 });
 
 balanceCheckbox.addEventListener("change", function() {
-    handleCheckboxChange(balanceCheckbox, [priceCheckbox]);
+    handleCheckboxChange(balanceCheckbox, [priceCheckbox,generationCheckbox,consumptionCheckbox]);
 });
 
 intervalInputs.forEach(input => {
