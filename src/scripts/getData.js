@@ -8,17 +8,14 @@ async function getDataFromAPI() {
         
         const response = await fetch('https://tauwisbackup.de/EMS/api/index.php');
         const data = await response.json();
-        //console.log("Daten:", data);
         let dataArray = Array.isArray(data) ? data : [data];
         
         let loadingCount = 0;
         let oldPercent = 0;
         for (let i = 0; i < dataArray.length; i++) {
-            //console.log("Loading Dataset: "+i+"/"+(dataArray.length-1));
             if(loadingCount = 5000){
                 let loadingPercentage = Math.round(calcLoadingPercentage(dataArray.length, i))+"%";
                 if(oldPercent != loadingPercentage){
-                    //console.log(loadingPercentage);
                     document.getElementById('loadingVal').innerHTML = loadingPercentage;
                 }
                 oldPercent = loadingPercentage;

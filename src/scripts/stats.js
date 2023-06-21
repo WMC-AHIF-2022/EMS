@@ -1,17 +1,16 @@
 function drawChart(data, label, checkbox, currentChart){
-    //console.log("Drawing chart with Data: ", data);
-    //console.log("Drawing chart with Labels: ", label);
-    let chartData2;
 
     const selectCheckbox = checkbox.filter(c => document.getElementById(c.name).checked);
-    //console.log("SelectedCheckbox:",selectCheckbox);
+    for (let i = 0; i < selectCheckbox.length;i++){
+
+    }
     data.push(eval(selectCheckbox[0].name));
     let chartData1 = {
         type: "line",
         labels:label,
         datasets: [{
             label: selectCheckbox[0].name,
-            data:data,
+            data:data[i].data,
             backgroundColor:selectCheckbox[0].backgroundColor,
             borderColor:selectCheckbox[0].borderColor,
             fill:false
