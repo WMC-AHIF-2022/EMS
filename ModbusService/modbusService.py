@@ -90,7 +90,7 @@ def ems_service():
 
     # Data to send in the POST request
     data = {
-    "measurement": pv_power,
+    "measurement": pv_power/1000,
     "type": "generation",
     }
 
